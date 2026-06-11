@@ -59,8 +59,9 @@ button:focus-visible{outline:2px solid #d9b44a;outline-offset:2px}
   #root [style*="overflow-x:auto"]{-webkit-overflow-scrolling:touch}
   /* section header right-aligned blurb reads left on a phone */
   #root header [style*="margin-left:auto"][style*="text-align:right"]{text-align:left !important;margin-left:0 !important}
-  /* landing nav: let the tab links sit under the wordmark, full row */
-  #root [style*="18px 24px 14px"]{padding:14px 15px 8px !important}
+  /* landing top nav: stack logo over the menu, both centered */
+  #root [style*="18px 24px 14px"]{padding:14px 15px 10px !important;flex-direction:column !important;align-items:center !important;gap:12px !important}
+  #root [style*="18px 24px 14px"] [style*="margin-left:auto"]{margin-left:0 !important;width:100% !important;justify-content:center !important}
   /* charts fill width with correct aspect (no letterbox); icons keep fixed size */
   #root svg[width="100%"]{height:auto !important}
 }
