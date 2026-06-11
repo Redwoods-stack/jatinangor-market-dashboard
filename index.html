@@ -238,7 +238,7 @@ function barChart(rows, series, opts){
   var plotW=W-PAD.l-PAD.r, plotH=H-PAD.t-PAD.b;
   var allVals=[]; rows.forEach(function(r){ series.forEach(function(s){ if(r[s.key]!=null) allVals.push(r[s.key]); }); });
   var hi=niceMax(Math.max.apply(null,allVals)||1);
-  gridY(svg,W,H,hi);
+  gridY(svg,W,H,hi,opts.fmtY);
   var n=rows.length, groupW=plotW/n, barGap=0.18*groupW, innerW=groupW-barGap;
   var bw=innerW/series.length;
   function py(v){ return PAD.t+plotH*(1-v/hi); }
@@ -250,7 +250,7 @@ function barChart(rows, series, opts){
       var rect=svgEl("rect",{x:x,y:y,width:Math.max(bw-2,1),height:Math.max(h,0),fill:s.color,rx:3,style:"cursor:pointer;transition:opacity .1s"});
       rect.addEventListener("mousemove",function(ev){
         var html='<div style="color:'+C.fog+';margin-bottom:5px;font-weight:600">'+esc(r.x)+'</div>';
-        series.forEach(function(ss){ if(r[ss.key]!=null) html+=tipRow(ss.color,ss.name,fmt(r[ss.key])); });
+        series.forEach(function(ss){ if(r[ss.key]!=null) html+=tipRow(ss.color,ss.name,(opts.fmtY||fmt)(r[ss.key])); });
         showTip(html,ev.clientX,ev.clientY);
       });
       rect.addEventListener("mouseleave",hideTip);
@@ -766,11 +766,282 @@ function renderSegments(root){
   root.appendChild(card("Golfer vs non-golfer guests","Room bookings by guest type · the golf-hotel link",el("div",{},[barChart(grows,gser,{height:260}),legendRow(gser)]),"margin-top:16px"));
 }
 
+/* ============ AUDIT REPORT SECTION — FY2025 draft audited FS ============ */
+var AUDIT={
+  meta:{company:"PT Langen Kridha Pratyangga Tbk",auditor:"KAP Sabar & Rekan (Public Accounting Firm)",signer:"Dr. Sabar, S.E., M.Ak., Ak., CA., CPA",reportDate:"June 2, 2026",status:"DRAFT",
+    opinion:"Financial statements present fairly, in all material respects — unmodified opinion, per Indonesian Financial Accounting Standards (SAK)",
+    kam:"Recognition & measurement of collaborative asset utilization (Jatinangor National Park) and the related long-term loan. Acquisition cost Rp45.76B, accumulated depreciation Rp5.13B, book value Rp40.63B. Assets are built on West Java Provincial Government land — the Company holds management rights until April 2046, after which everything is handed over to the land owner. The auditor's report also references a Material Uncertainty Related to Going Concern.",
+    listed:"Public company since June 30, 1997 · 1,121 shares issued at Rp5,000,000 par"},
+  pnl:{
+    rev:{golf:[31620791223,30127899051],hotel:[20985318538,21492531031],park:[16813058281,17097027361]},
+    cogs:{golf:[15542533534,15659202213],hotel:[14783798430,14112687025],park:[13723781489,12929517156]},
+    marketing:[951258730,940230995],admin:[17753254101,17652760799],otherInc:[156802314,231048053],
+    pretax:[6821344072,7654107308],tax:[2107020598,-908819026],net:[4714323474,8562926334],
+    oci:[-2551667772,-1197098337],comprehensive:[2162655702,7365827997],eps:[4205463,7638650]},
+  revDetail:{
+    golf:[["Golf course",27470339772,26291189350],["Membership",2595087261,2220697958],["Driving range",860702651,873762456],["Proshop",652185139,723497505],["Others",42476400,18751782]],
+    hotel:[["Food & beverages",13748341084,14600670778],["Rooms",6771987395,6366219683],["Recreation",324327500,381943746],["Others",140662559,143696824]],
+    park:[["Playground rides",8390554644,6144154708],["Tickets",3300578500,5598979501],["Food court",3269394182,3640021953],["Souvenirs",1066606508,1162367375],["Parking",513554547,413080460],["Others",272369900,138423364]]},
+  cogsDetail:{
+    golf:[["Salaries & welfare",6868027726,6135318264],["Golf cart",4109448396,4540474932],["Repair & maintenance",1992226776,2531317781],["Overhead",1594519749,1741569073],["Depreciation",978310887,710522163]],
+    hotel:[["Overhead",7011791743,7136478215],["Salaries & welfare",6548864755,5786729461],["Repair & maintenance",472716660,1029640585],["Depreciation",750425272,159838764]],
+    park:[["Operator services",5043346421,5513113207],["Maintenance",4659338722,2893552490],["Materials",2517419521,2802571625],["Depreciation",1503676825,1720279834]]},
+  opexAdmin:[["Salaries & welfare",7248093379,6982756776],["Pemda service reward",3819866412,4084559231],["General & administration",3657701546,3810649773],["Post-retirement benefits",820303412,657622823],["Loan interest",819349998,708632567],["Bank administration",511691705,467890083],["Depreciation",212643733,122471273],["Banquet & representation",192725048,183258298],["Others",470878868,634919975]],
+  bs:{
+    curAssets:[["Cash & equivalents",3820856891,7114474251],["Trade receivables",648853774,709355920],["Other receivables",48142695,0],["Inventories",754571297,898541902],["Prepaid expenses",20048821,231745756],["Prepaid tax",25407532,283202161]],
+    nonCurAssets:[["Fixed assets — net",47295344568,42354350904],["Deferred tax assets",2477890023,3132606854]],
+    totCurAssets:[5317881010,9237319990],totAssets:[55091115601,54724277748],
+    stLiab:[["Trade payables",1375422326,1226103319],["Other payables",5320214971,3877527829],["Accrued expenses",1844304526,3880990341],["Prepaid income",4777494678,4227151320],["Tax payables",1218550608,899545314],["Current LT loan",890188922,1106969646],["Current capital loan",2747987299,3470666666],["Current lease",1947333717,1168830000]],
+    ltLiab:[["Long-term loan",12462644903,16554060797],["LT capital loan",0,2426444445],["LT lease",560950488,779220000],["Post-employment benefits",7319597270,6024467927],["LT other payables",3381470047,0]],
+    totStLiab:[20121497047,19857784435],totLiab:[43846159755,45641977604],
+    equity:[["Share capital",5605000000,5605000000],["Additional paid-in capital",10840000000,10840000000],["General reserves",1500000000,1500000000],["Accumulated losses",-1270819413,-5985142887],["Accumulated OCI losses",-5429224741,-2877556969]],
+    totEquity:[11244955846,9082300144]},
+  cf:{
+    detail:[["Receipts from customers",66784977927],["Paid to suppliers",-33663611583],["Paid to employees",-17696887291],["Paid to Pemda Jabar",-3137732000],["Interest income",51571906],["Income tax",-1723252281],["Other taxes",-2726090571],["Post-employment benefits",-2796543008],["Capex (fixed assets)",-8386050459]],
+    op:[5092433099,5141247183],inv:[-8386050459,-5740658822],fin:[0,0],
+    net:[-3293617360,-599411639],begin:[7114474251,7713885890],end:[3820856891,7114474251]},
+  eqTrend:{years:["2023","2024","2025"],total:[2054115268,9082300144,11244955846],retained:[-14548069221,-5985142887,-1270819413]},
+  agreements:[
+    ["Golf course management — Pemda Jawa Barat","30-year right to manage the 121.4 Ha Jatinangor golf course (since Apr 2016, until Apr 2046). Fixed yearly contribution + min. 10% profit-before-tax sharing."],
+    ["Jatinangor National Park — PT Laksmana Jaya Tungga","Third party built & funds the park, operates it until Mar 2046. Management fee 28–32% of net revenue by tier; construction cost repaid interest-free in installments."],
+    ["Investment loans","Rp1.0B (Sriyanto, to May 2026) + Rp2.0B (PT Haka Cipta Solusi, to Dec 2026), both at 15% p.a."],
+    ["Vehicle leases — Mandiri Tunas Finance","Rp0.90B + Rp1.44B (to Oct 2026) and Rp1.48B (to Aug 2027), effective 12.5–12.75% p.a."],
+    ["Proshop lease — PT Asia Golf Indonesia","Rp80M/month for 6 years (Apr 2026 – Mar 2032), Rp500M down payment + Rp1.42B settlement."],
+    ["Profit-sharing operations","Spa 55/45 (Five Element), Proshop goods 25/75 (Asia Golf), Buggy 45/55 (Cawang Mitra Sejati)."]]
+};
+var SEGKEYS=["golf","hotel","park"];
+var SEGN={golf:"Golf",hotel:"Hotel",park:"Flower Park"};
+var SEGC={golf:"#3da35d",hotel:"#5b8dd6",park:"#d98a3d"};
+function rupiahS(n){ if(n==null||isNaN(n)) return "—"; return (n<0?"−":"")+rupiah(Math.abs(n)); }
+function chg(v25,v24){ return v24?(v25-v24)/Math.abs(v24):null; }
+
+/* two bars per row: 2025 vs 2024 */
+function duoBars(items,fmtFn){
+  fmtFn=fmtFn||rupiahS;
+  var max=Math.max.apply(null,items.map(function(d){return Math.max(Math.abs(d.v25||0),Math.abs(d.v24||0));}).concat([1]));
+  function brow(v,color,lbl){
+    return el("div",{style:"display:flex;align-items:center;gap:8px;margin-top:2px"},[
+      el("span",{style:"width:30px;font-size:10px;color:"+C.fog+";flex:none"},lbl),
+      el("div",{style:"flex:1;height:8px;background:"+C.panel2+";border-radius:4px;overflow:hidden"},[
+        el("div",{style:"height:100%;border-radius:4px;width:"+(Math.abs(v||0)/max*100)+"%;background:"+color})
+      ]),
+      el("span",{style:"width:86px;text-align:right;color:"+C.sub+";font-size:11.5px;font-variant-numeric:tabular-nums;flex:none"},fmtFn(v))
+    ]);
+  }
+  return el("div",{style:"display:flex;flex-direction:column;gap:12px"},
+    items.map(function(d){
+      var delta=chg(d.v25,d.v24);
+      return el("div",{style:"font-size:12px"},[
+        el("div",{style:"display:flex;justify-content:space-between;margin-bottom:3px"},[
+          el("span",{style:"color:"+C.ink+";font-weight:500"},d.name),
+          el("span",{style:"font-weight:600;color:"+(delta==null?C.fog:((d.exp?delta<=0:delta>=0)?C.fairway:C.flag))},delta==null?"new":arrowPct(delta))
+        ]),
+        brow(d.v25,d.color||C.fairway,"’25"),
+        brow(d.v24,C.fog,"’24")
+      ]);
+    }));
+}
+/* signed horizontal bars (cash-flow style) */
+function signedBars(items){
+  var max=Math.max.apply(null,items.map(function(d){return Math.abs(d.value||0);}).concat([1]));
+  return el("div",{style:"display:flex;flex-direction:column;gap:10px"},
+    items.map(function(d){
+      var pos=(d.value||0)>=0;
+      return el("div",{style:"font-size:12.5px"},[
+        el("div",{style:"display:flex;justify-content:space-between;margin-bottom:4px"},[
+          el("span",{style:"color:"+C.ink},d.name),
+          el("span",{style:"color:"+(pos?C.fairway:C.flag)+";font-weight:600"},(pos?"+":"−")+rupiah(Math.abs(d.value)))
+        ]),
+        el("div",{style:"height:7px;background:"+C.panel2+";border-radius:4px;overflow:hidden"},[
+          el("div",{style:"height:100%;border-radius:4px;width:"+(Math.abs(d.value)/max*100)+"%;background:"+(pos?C.fairway:C.flag)})
+        ])
+      ]);
+    }));
+}
+function sumSeg(o,i){ return o.golf[i]+o.hotel[i]+o.park[i]; }
+
+/* ----- AUDIT TAB 1: Overview ----- */
+function renderAuditOverview(root){
+  root.innerHTML="";
+  var P=AUDIT.pnl, B=AUDIT.bs;
+  var rev=[sumSeg(P.rev,0),sumSeg(P.rev,1)], gp=[rev[0]-sumSeg(P.cogs,0),rev[1]-sumSeg(P.cogs,1)];
+  var wc=[B.totCurAssets[0]-B.totStLiab[0],B.totCurAssets[1]-B.totStLiab[1]];
+
+  root.appendChild(el("div",{style:"background:"+C.panel2+";border:1px solid "+C.line+";border-radius:12px;padding:13px 16px;margin-bottom:18px;font-size:12.5px;color:"+C.sub+";line-height:1.6",
+    html:"<b style='color:"+C.gold+"'>"+AUDIT.meta.status+"</b> — Independent Auditor's Report by <b style='color:"+C.ink+"'>"+esc(AUDIT.meta.auditor)+"</b>, signed by "+esc(AUDIT.meta.signer)+", dated "+esc(AUDIT.meta.reportDate)+".<br><b style='color:"+C.fairway+"'>Opinion:</b> "+esc(AUDIT.meta.opinion)+". · "+esc(AUDIT.meta.listed)}));
+
+  root.appendChild(el("div",{style:"display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-bottom:18px"},[
+    stat("Revenue FY25",rupiah(rev[0]),{accent:C.fairway,delta:chg(rev[0],rev[1]),sub:"vs "+rupiah(rev[1])+" in 2024"}),
+    stat("Net income",rupiah(P.net[0]),{accent:P.net[0]>=0?C.fairway:C.flag,delta:chg(P.net[0],P.net[1]),sub:"vs "+rupiah(P.net[1])+" in 2024"}),
+    stat("Total assets",rupiah(B.totAssets[0]),{delta:chg(B.totAssets[0],B.totAssets[1]),sub:"vs "+rupiah(B.totAssets[1])}),
+    stat("Total equity",rupiah(AUDIT.bs.totEquity[0]),{accent:C.MV,delta:chg(B.totEquity[0],B.totEquity[1]),sub:"deficit narrowing"}),
+    stat("Cash & equivalents",rupiah(B.curAssets[0][1]),{accent:C.gold,delta:chg(B.curAssets[0][1],B.curAssets[0][2]),sub:"vs "+rupiah(B.curAssets[0][2])})
+  ]));
+
+  var twoUp=el("div",{style:"display:grid;grid-template-columns:340px 1fr;gap:16px"});
+  var mix=SEGKEYS.map(function(k){return {name:SEGN[k],value:P.rev[k][0],color:SEGC[k]};});
+  var mixLegend=el("div",{style:"display:flex;flex-direction:column;gap:7px;margin-top:8px;width:100%"},
+    mix.map(function(d){return el("div",{style:"display:flex;align-items:center;gap:9px;font-size:13px"},[
+      el("span",{style:"width:10px;height:10px;border-radius:3px;flex:none;background:"+d.color}),
+      el("span",{style:"color:"+C.sub},d.name),
+      el("span",{style:"margin-left:auto;color:"+C.fog},rupiah(d.value)),
+      el("span",{style:"width:52px;text-align:right;font-weight:600;color:"+C.ink},pct(d.value/rev[0]))]);}));
+  twoUp.appendChild(card("Revenue mix FY2025",rupiah(rev[0])+" total",
+    el("div",{style:"display:flex;flex-direction:column;align-items:center"},[donut(mix,{size:190}),mixLegend])));
+
+  var ratios=el("div",{style:"display:grid;grid-template-columns:repeat(2,1fr);gap:12px"},[
+    stat("Gross margin",pct(gp[0]/rev[0]),{accent:C.fairway,sub:"2024: "+pct(gp[1]/rev[1])}),
+    stat("Net margin",pct(P.net[0]/rev[0]),{sub:"2024: "+pct(P.net[1]/rev[1])}),
+    stat("Current ratio",(B.totCurAssets[0]/B.totStLiab[0]).toFixed(2)+"×",{accent:C.flag,sub:"2024: "+(B.totCurAssets[1]/B.totStLiab[1]).toFixed(2)+"× · below 1 = tight liquidity"}),
+    stat("Debt / equity",(B.totLiab[0]/B.totEquity[0]).toFixed(2)+"×",{accent:C.gold,sub:"2024: "+(B.totLiab[1]/B.totEquity[1]).toFixed(2)+"× · improving"})
+  ]);
+  var attention=card("⚠ Points of attention","from the auditor's report",
+    el("div",{style:"font-size:12.5px;color:"+C.sub+";line-height:1.65"},[
+      el("div",{html:"• <b style='color:"+C.ink+"'>Key Audit Matter:</b> "+esc(AUDIT.meta.kam)}),
+      el("div",{style:"margin-top:8px",html:"• <b style='color:"+C.flag+"'>Negative working capital:</b> "+rupiahS(wc[0])+" (2024: "+rupiahS(wc[1])+") — current liabilities exceed current assets."}),
+      el("div",{style:"margin-top:8px",html:"• <b style='color:"+C.ink+"'>Accumulated losses</b> of "+rupiahS(-1270819413)+" remain, though sharply reduced from "+rupiahS(-14548069221)+" at end-2023."})
+    ]));
+  twoUp.appendChild(el("div",{style:"display:flex;flex-direction:column;gap:16px"},[ratios,attention]));
+  root.appendChild(twoUp);
+
+  root.appendChild(card("Significant agreements & commitments","Note 29",
+    el("div",{style:"display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:14px"},
+      AUDIT.agreements.map(function(a){
+        return el("div",{style:"background:"+C.panel2+";border:1px solid "+C.line+";border-radius:10px;padding:12px 14px"},[
+          el("div",{style:"font-size:12.5px;font-weight:600;color:"+C.ink+";margin-bottom:5px"},a[0]),
+          el("div",{style:"font-size:11.5px;color:"+C.sub+";line-height:1.55"},a[1])
+        ]);
+      })),"margin-top:16px"));
+}
+
+/* ----- AUDIT TAB 2: Profit & Loss ----- */
+var stateAud={seg:"golf"};
+function renderAuditPnl(root){
+  root.innerHTML="";
+  var P=AUDIT.pnl;
+  var rev=[sumSeg(P.rev,0),sumSeg(P.rev,1)], cogs=[sumSeg(P.cogs,0),sumSeg(P.cogs,1)];
+  var gp=[rev[0]-cogs[0],rev[1]-cogs[1]];
+
+  root.appendChild(el("div",{style:"display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-bottom:18px"},[
+    stat("Gross profit",rupiah(gp[0]),{accent:C.fairway,delta:chg(gp[0],gp[1]),sub:"margin "+pct(gp[0]/rev[0])}),
+    stat("Operating expenses",rupiah(P.marketing[0]+P.admin[0]),{accent:C.flag,sub:"marketing + G&A · ’24: "+rupiah(P.marketing[1]+P.admin[1])}),
+    stat("Profit before tax",rupiah(P.pretax[0]),{delta:chg(P.pretax[0],P.pretax[1]),sub:"vs "+rupiah(P.pretax[1])}),
+    stat("Net income",rupiah(P.net[0]),{accent:C.fairway,delta:chg(P.net[0],P.net[1]),sub:"EPS Rp"+fmt(P.eps[0])}),
+    stat("Comprehensive income",rupiah(P.comprehensive[0]),{delta:chg(P.comprehensive[0],P.comprehensive[1]),sub:"after OCI "+rupiahS(P.oci[0])})
+  ]));
+
+  /* revenue & gross margin by segment */
+  var segRows=SEGKEYS.map(function(k){return {x:SEGN[k],y25:P.rev[k][0],y24:P.rev[k][1]};});
+  var segSer=[{key:"y25",name:"2025",color:C.fairway},{key:"y24",name:"2024",color:C.fog}];
+  var twoUp=el("div",{style:"display:grid;grid-template-columns:1fr 1fr;gap:16px"});
+  twoUp.appendChild(card("Revenue by segment","2025 vs 2024",el("div",{},[barChart(segRows,segSer,{height:270,fmtY:rupiah}),legendRow(segSer)])));
+  var gmRows=SEGKEYS.map(function(k){
+    var m25=(P.rev[k][0]-P.cogs[k][0])/P.rev[k][0], m24=(P.rev[k][1]-P.cogs[k][1])/P.rev[k][1];
+    return el("div",{style:"margin-bottom:14px"},[
+      el("div",{style:"display:flex;justify-content:space-between;font-size:12.5px;margin-bottom:5px"},[
+        el("span",{style:"color:"+C.ink+";font-weight:600"},SEGN[k]),
+        el("span",{style:"color:"+(m25>=m24?C.fairway:C.flag)+";font-weight:600"},pct(m25)+" "+(m25>=m24?"▲":"▼")+" (’24: "+pct(m24)+")")
+      ]),
+      el("div",{style:"height:9px;background:"+C.panel2+";border-radius:5px;overflow:hidden"},[
+        el("div",{style:"height:100%;border-radius:5px;width:"+(m25*100)+"%;background:"+SEGC[k]})
+      ])
+    ]);
+  });
+  twoUp.appendChild(card("Gross margin by segment","gross profit ÷ revenue",el("div",{style:"padding-top:6px"},gmRows)));
+  root.appendChild(twoUp);
+
+  /* segment detail */
+  root.appendChild(el("div",{style:"display:flex;gap:14px;align-items:center;margin:16px 0 14px"},[
+    segmented("Segment",stateAud.seg,SEGKEYS.map(function(k){return [k,SEGN[k]];}),function(v){stateAud.seg=v;renderAuditPnl(root);})
+  ]));
+  var k=stateAud.seg;
+  var detUp=el("div",{style:"display:grid;grid-template-columns:1fr 1fr;gap:16px"});
+  detUp.appendChild(card(SEGN[k]+" — revenue lines","Note 23 · 2025 vs 2024",
+    duoBars(AUDIT.revDetail[k].map(function(d){return {name:d[0],v25:d[1],v24:d[2],color:SEGC[k]};}),rupiahS)));
+  detUp.appendChild(card(SEGN[k]+" — cost of revenue","Note 24 · 2025 vs 2024",
+    duoBars(AUDIT.cogsDetail[k].map(function(d){return {name:d[0],v25:d[1],v24:d[2],color:C.flag,exp:true};}),rupiahS)));
+  root.appendChild(detUp);
+
+  root.appendChild(card("Administration & general expenses","Note 26 · biggest operating cost block",
+    duoBars(AUDIT.opexAdmin.map(function(d){return {name:d[0],v25:d[1],v24:d[2],color:C.gold,exp:true};}),rupiahS),"margin-top:16px"));
+
+  /* income statement table */
+  var rows=[
+    {l:"Revenue",v:[rev[0],rev[1]],b:1},{l:"Cost of revenues",v:[-cogs[0],-cogs[1]],e:1},
+    {l:"Gross profit",v:[gp[0],gp[1]],b:1},{l:"Marketing & promotion",v:[-P.marketing[0],-P.marketing[1]],e:1},
+    {l:"Administration & general",v:[-P.admin[0],-P.admin[1]],e:1},{l:"Other income",v:[P.otherInc[0],P.otherInc[1]]},
+    {l:"Profit before tax",v:[P.pretax[0],P.pretax[1]],b:1},{l:"Income tax",v:[-P.tax[0],-P.tax[1]],e:1},
+    {l:"Net income",v:[P.net[0],P.net[1]],b:1},{l:"Other comprehensive loss",v:[P.oci[0],P.oci[1]],e:1},
+    {l:"Comprehensive income",v:[P.comprehensive[0],P.comprehensive[1]],b:1}];
+  var t=el("table",{style:"width:100%;border-collapse:collapse;font-size:12.5px;font-variant-numeric:tabular-nums"});
+  t.appendChild(el("thead",{},el("tr",{style:"color:"+C.fog+";text-align:right"},[
+    el("th",{style:"text-align:left;padding:6px 10px;font-weight:500"},"Line"),
+    el("th",{style:"padding:6px 10px;font-weight:500"},"2025"),el("th",{style:"padding:6px 10px;font-weight:500"},"2024"),
+    el("th",{style:"padding:6px 10px;font-weight:500"},"Δ YoY")])));
+  var tb=el("tbody",{});
+  rows.forEach(function(r){
+    var d=chg(Math.abs(r.v[0]),Math.abs(r.v[1]));
+    var good=r.e?(d!=null&&d<=0):(d!=null&&d>=0);
+    tb.appendChild(el("tr",{style:"border-top:1px solid "+C.line+";text-align:right"},[
+      el("td",{style:"text-align:left;padding:6px 10px;color:"+(r.b?C.ink:C.sub)+";font-weight:"+(r.b?600:400)},r.l),
+      el("td",{style:"padding:6px 10px;color:"+(r.v[0]<0?C.flag:C.ink)},rupiahS(r.v[0])),
+      el("td",{style:"padding:6px 10px;color:"+C.sub},rupiahS(r.v[1])),
+      el("td",{style:"padding:6px 10px;font-weight:600;color:"+(d==null?C.fog:(good?C.fairway:C.flag))},d==null?"—":arrowPct(d))
+    ]));
+  });
+  t.appendChild(tb);
+  root.appendChild(card("Income statement","full year, IDR · draft audited",el("div",{style:"overflow-x:auto"},t),"margin-top:16px"));
+}
+
+/* ----- AUDIT TAB 3: Balance Sheet ----- */
+function renderAuditBS(root){
+  root.innerHTML="";
+  var B=AUDIT.bs;
+  var wc=[B.totCurAssets[0]-B.totStLiab[0],B.totCurAssets[1]-B.totStLiab[1]];
+  root.appendChild(el("div",{style:"display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-bottom:18px"},[
+    stat("Total assets",rupiah(B.totAssets[0]),{accent:C.fairway,delta:chg(B.totAssets[0],B.totAssets[1]),sub:"vs "+rupiah(B.totAssets[1])}),
+    stat("Total liabilities",rupiah(B.totLiab[0]),{accent:C.flag,delta:chg(B.totLiab[0],B.totLiab[1]),sub:"▼ is good — deleveraging"}),
+    stat("Total equity",rupiah(B.totEquity[0]),{accent:C.MV,delta:chg(B.totEquity[0],B.totEquity[1]),sub:"vs "+rupiah(B.totEquity[1])}),
+    stat("Working capital",rupiahS(wc[0]),{accent:C.flag,sub:"2024: "+rupiahS(wc[1])+" · negative"}),
+    stat("Current ratio",(B.totCurAssets[0]/B.totStLiab[0]).toFixed(2)+"×",{accent:C.gold,sub:"2024: "+(B.totCurAssets[1]/B.totStLiab[1]).toFixed(2)+"×"})
+  ]));
+  var twoUp=el("div",{style:"display:grid;grid-template-columns:1fr 1fr;gap:16px"});
+  twoUp.appendChild(card("Assets","current + non-current · 2025 vs 2024",
+    duoBars(B.curAssets.concat(B.nonCurAssets).map(function(d){return {name:d[0],v25:d[1],v24:d[2],color:C.fairway};}),rupiahS)));
+  twoUp.appendChild(card("Liabilities","short + long term · 2025 vs 2024",
+    duoBars(B.stLiab.concat(B.ltLiab).map(function(d){return {name:d[0],v25:d[1],v24:d[2],color:C.flag,exp:true};}),rupiahS)));
+  root.appendChild(twoUp);
+  root.appendChild(card("Equity composition","share capital steady — losses narrowing",
+    duoBars(B.equity.map(function(d){return {name:d[0],v25:d[1],v24:d[2],color:C.MV};}),rupiahS),"margin-top:16px"));
+}
+
+/* ----- AUDIT TAB 4: Cash Flow & Equity ----- */
+function renderAuditCF(root){
+  root.innerHTML="";
+  var F=AUDIT.cf, E=AUDIT.eqTrend;
+  root.appendChild(el("div",{style:"display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-bottom:18px"},[
+    stat("Operating cash flow",rupiahS(F.op[0]),{accent:C.fairway,delta:chg(F.op[0],F.op[1]),sub:"2024: "+rupiahS(F.op[1])}),
+    stat("Investing (capex)",rupiahS(F.inv[0]),{accent:C.flag,sub:"2024: "+rupiahS(F.inv[1])+" · expansion"}),
+    stat("Net change in cash",rupiahS(F.net[0]),{accent:C.flag,sub:"2024: "+rupiahS(F.net[1])}),
+    stat("Ending cash",rupiah(F.end[0]),{accent:C.gold,delta:chg(F.end[0],F.end[1]),sub:"from "+rupiah(F.begin[0])+" at start"})
+  ]));
+  var twoUp=el("div",{style:"display:grid;grid-template-columns:1fr 1fr;gap:16px"});
+  twoUp.appendChild(card("Cash flow detail — FY2025","direct method · Rp",signedBars(F.detail.map(function(d){return {name:d[0],value:d[1]};}))));
+  var eqRows=E.years.map(function(y,i){return {x:y,total:E.total[i],retained:E.retained[i]};});
+  var eqSer=[{key:"total",name:"Total equity",color:C.MV,width:3,dot:true},{key:"retained",name:"Retained earnings (deficit)",color:C.flag,width:1.8,dot:true}];
+  twoUp.appendChild(card("Equity recovery 2023 → 2025","deficit shrank from −Rp14.5B to −Rp1.3B",
+    el("div",{},[lineChart(eqRows,eqSer,{height:280,fmtY:rupiahS,domainMin:-16000000000,domainMax:16000000000,zeroLine:true}),legendRow(eqSer)])));
+  root.appendChild(twoUp);
+  root.appendChild(el("div",{style:"margin-top:14px;font-size:12px;color:"+C.fog+";line-height:1.6",
+    html:"Reading: the company generates positive operating cash ("+rupiah(F.op[0])+"), but FY2025 capex of "+rupiah(Math.abs(F.inv[0]))+" outpaced it, drawing cash down by "+rupiahS(F.net[0])+". No financing inflows during the year."}));
+}
+
 /* ============ APP SHELL — root category router ============ */
-var SECTION=null; // null = landing; "golf" | "room"
+var SECTION=null; // null = landing; "golf" | "room" | "audit"
 var GOLF_TABS=[["market","Market Analysis"],["overall","Overall Share"],["gcmai","GCMAI National"]];
 var ROOM_TABS=[["perf","Occupancy & Revenue"],["types","Room Types"],["segments","Segments & Guests"]];
-var golfTab="market", roomTab="perf";
+var AUDIT_TABS=[["overview","Overview"],["pnl","Profit & Loss"],["balance","Balance Sheet"],["cashflow","Cash Flow & Equity"]];
+var golfTab="market", roomTab="perf", auditTab="overview";
 
 function appRoot(){
   var rootEl=document.getElementById("root");
@@ -796,11 +1067,13 @@ function renderLanding(){
   app.appendChild(sub);
 
   // two big cards
-  var wrap=el("div",{style:"max-width:860px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1fr 1fr;gap:22px"});
+  var wrap=el("div",{style:"max-width:1240px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:22px"});
   wrap.appendChild(categoryCard("golf","⛳","Golf","Rounds played & competitive market share across the Bandung Raya 4-course field, plus the national GCMAI benchmark.",
     [["4","tracked courses"],["6 yrs","2021–2026"],["#2","JNGR rank '25"]], C.fairway));
   wrap.appendChild(categoryCard("room","🏨","Room / Hotel","Occupancy, revenue, ARR, room-type mix and market segments for the resort's lodging business.",
     [["9","room types"],["12","market segments"],["YTD","2026 tracking"]], RCOL.budget));
+  wrap.appendChild(categoryCard("audit","📋","Audit Report","FY2025 audited financial statements (draft) — revenue, profitability, balance sheet, cash flow and key auditor findings.",
+    [["69.4B","revenue FY25"],["4.7B","net income"],["55.1B","total assets"]], C.MV));
   app.appendChild(wrap);
 
   app.appendChild(el("footer",{style:"max-width:860px;margin:40px auto 0;padding:18px 24px 0;border-top:1px solid "+C.line+";font-size:11px;color:"+C.fog+";text-align:center;line-height:1.6",
@@ -827,24 +1100,25 @@ function categoryCard(id,icon,title,desc,stats,accent){
 /* ---------- SECTION (golf or room) ---------- */
 function renderSection(){
   var app=appRoot();
-  var isGolf=SECTION==="golf";
-  var accent=isGolf?C.fairway:RCOL.budget;
-  var tabs=isGolf?GOLF_TABS:ROOM_TABS;
-  var cur=isGolf?golfTab:roomTab;
+  var isGolf=SECTION==="golf", isAudit=SECTION==="audit";
+  var accent=isGolf?C.fairway:(isAudit?C.MV:RCOL.budget);
+  var tabs=isGolf?GOLF_TABS:(isAudit?AUDIT_TABS:ROOM_TABS);
+  var cur=isGolf?golfTab:(isAudit?auditTab:roomTab);
 
   var header=el("header",{style:"border-bottom:1px solid "+C.line+";padding:18px 28px 0;background:linear-gradient(180deg,"+C.grad+","+C.bg+")"});
   var topRow=el("div",{style:"display:flex;align-items:center;gap:14px;flex-wrap:wrap"});
   // home button
   topRow.appendChild(el("button",{style:"border:1px solid "+C.line+";background:"+C.panel2+";color:"+C.sub+";cursor:pointer;border-radius:9px;padding:7px 13px;font-size:13px;font-family:inherit",
     onclick:function(){ SECTION=null; renderLanding(); window.scrollTo(0,0); }},"← Home"));
-  topRow.appendChild(el("div",{style:"width:34px;height:34px;border-radius:9px;background:"+accent+";display:grid;place-items:center;font-size:18px;flex:none"},isGolf?"⛳":"🏨"));
+  topRow.appendChild(el("div",{style:"width:34px;height:34px;border-radius:9px;background:"+accent+";display:grid;place-items:center;font-size:18px;flex:none"},isGolf?"⛳":(isAudit?"📋":"🏨")));
   topRow.appendChild(el("div",{},[
-    el("div",{style:"font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:19px"},isGolf?"Golf — Market Share":"Room / Hotel — Performance"),
-    el("div",{style:"font-size:12px;color:"+C.fog+";margin-top:1px"},"Jatinangor National Golf & Resort")
+    el("div",{style:"font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:19px"},isGolf?"Golf — Market Share":(isAudit?"Audit Report — FY2025":"Room / Hotel — Performance")),
+    el("div",{style:"font-size:12px;color:"+C.fog+";margin-top:1px"},isAudit?"PT Langen Kridha Pratyangga Tbk · Jatinangor National Golf & Resort":"Jatinangor National Golf & Resort")
   ]));
   topRow.appendChild(el("div",{style:"margin-left:auto;font-size:11px;color:"+C.fog+";text-align:right;line-height:1.6",
     html:isGolf?"Bandung Raya rivals: <b style='color:"+C.ink+"'>KBP · Mountain View · Dago</b><br>2026 through <b style='color:"+C.fairway+"'>Jun (JNGR) / May (rivals)</b>"
-               :"2026 actuals through <b style='color:"+accent+"'>May / early June</b><br>vs 2025 actual & 2026 budget"}));
+        :isAudit?"<b style='color:"+C.gold+"'>DRAFT</b> audited FS · KAP Sabar & Rekan<br>FY2025 vs FY2024 · figures in <b style='color:"+C.ink+"'>IDR</b>"
+                :"2026 actuals through <b style='color:"+accent+"'>May / early June</b><br>vs 2025 actual & 2026 budget"}));
   header.appendChild(topRow);
 
   var nav=el("nav",{style:"display:flex;gap:4px;margin-top:18px"});
@@ -852,7 +1126,7 @@ function renderSection(){
     var active=cur===t[0];
     nav.appendChild(el("button",{
       style:"border:none;background:transparent;cursor:pointer;padding:10px 16px 12px;font-size:14px;font-family:inherit;transition:color .15s;border-bottom:2px solid "+(active?accent:"transparent")+";color:"+(active?C.ink:C.fog)+";font-weight:"+(active?600:400),
-      onclick:function(){ if(isGolf) golfTab=t[0]; else roomTab=t[0]; renderSection(); }
+      onclick:function(){ if(isGolf) golfTab=t[0]; else if(isAudit) auditTab=t[0]; else roomTab=t[0]; renderSection(); }
     },t[1]));
   });
   header.appendChild(nav);
@@ -865,6 +1139,11 @@ function renderSection(){
     if(golfTab==="market") renderMarket(view);
     else if(golfTab==="overall") renderOverall(view);
     else renderGCMAI(view);
+  } else if(isAudit){
+    if(auditTab==="overview") renderAuditOverview(view);
+    else if(auditTab==="pnl") renderAuditPnl(view);
+    else if(auditTab==="balance") renderAuditBS(view);
+    else renderAuditCF(view);
   } else {
     if(roomTab==="perf") renderRoomPerf(view);
     else if(roomTab==="types") renderRoomTypes(view);
@@ -874,6 +1153,8 @@ function renderSection(){
   main.appendChild(el("footer",{style:"margin-top:40px;padding-top:18px;border-top:1px solid "+C.line+";font-size:11px;color:"+C.fog+";line-height:1.6",
     html:isGolf
       ? "Source: Market Share 2025–2026 (Rounds). Market share = a course's rounds ÷ total rounds of the tracked field. 2026 figures are YTD; cross-year comparisons use the same month span. <b style='color:"+C.sub+"'>Internal use — Jatinangor team.</b>"
+      : isAudit
+      ? "Source: DRAFT Financial Statements of PT Langen Kridha Pratyangga Tbk, December 31, 2025, with Independent Auditor's Report by KAP Sabar & Rekan dated June 2, 2026. Figures in full IDR (B = billion, M = million). Draft — subject to change until final issuance. <b style='color:"+C.sub+"'>Internal use — Jatinangor team.</b>"
       : "Source: Market Share Room 2026 workbook. Revenue in IDR; ARR = revenue ÷ room nights. 2026 figures are YTD vs 2025 actual and 2026 budget. <b style='color:"+C.sub+"'>Internal use — Jatinangor team.</b>"}));
   app.appendChild(main);
 }
