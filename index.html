@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Jatinangor Market Share Room</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;700&display=swap');
+html,body{margin:0;padding:0;background:#0d1311}
+#root{min-height:100vh}
+*{box-sizing:border-box}
+button:focus-visible{outline:2px solid #d9b44a;outline-offset:2px}
+::-webkit-scrollbar{height:8px;width:8px}::-webkit-scrollbar-thumb{background:#27332e;border-radius:4px}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script>
+var DATA={"months":["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"],"bandung":{"2026":{"JNGR":[3536,2885,2709,3294,3910,1282,0,0,0,0,0,0],"KBP":[3204,2895,2409,3032,3676,null,null,null,null,null,null,null],"MV":[3329,2939,2385,2817,3444,null,null,null,null,null,null,null],"DH":[2250,2118,1825,2387,2327,null,null,null,null,null,null,null]},"2025":{"JNGR":[3275,3193,2041,3476,3931,3266,3645,4292,3283,3564,3326,3804],"KBP":[3532,4003,2386,3386,4125,3662,3982,4262,3058,3303,3477,3522],"MV":[2785,2944,1866,2615,2820,2894,2838,3603,3381,3575,3348,3556],"DH":[2995,2859,2038,2556,2954,2679,2814,3289,2757,2927,2737,2554]},"2024":{"JNGR":[3855,3832,2929,2745,4130,3878,3939,4302,3667,4288,3893,4169],"KBP":[3519,3598,3387,2644,4393,4001,4285,4507,3923,4322,3545,4114],"MV":[2899,3054,2387,2275,3513,2814,2672,2663,2344,2305,2210,2499],"DH":[2736,2585,2468,2236,2919,2909,3133,3500,3170,3375,3313,3203]},"2023":{"JNGR":[3268,3057,3074,2725,3255,3789,4521,3906,3719,3791,4120,4334],"KBP":[3726,3010,3372,2646,3256,3427,3498,3503,3625,3214,3647,4069],"MV":[2862,2642,2463,2154,2902,3126,3062,2915,3207,3331,3053,3064],"DH":[2804,2575,2745,2405,2650,2937,3121,3251,3500,2982,2930,3080]},"2022":{"JNGR":[2879,2559,3205,1903,3155,3056,3371,3430,3619,3780,3056,4000],"KBP":[3673,2762,3295,2122,3359,3400,3515,3405,3469,3552,3333,3885],"MV":[2937,2300,2743,1844,2466,2423,2815,2703,2789,3252,2612,2693],"DH":[3019,2707,2812,2722,2737,2578,2834,2755,2756,3169,2938,3059]},"2021":{"JNGR":[2647,2757,3270,2413,2864,2239,305,1703,2501,3007,2940,3199],"KBP":[2837,2839,3433,3174,2652,3080,623,2040,3395,3991,3295,3943],"MV":[2192,2105,2556,1956,2311,2227,1355,3816,2950,3052,2574,2925],"DH":[2180,1928,2278,2121,2481,2045,451,2863,3120,2991,2604,2784]}},"pred48":[3825.1898,2383.8816,3729.4141,4059.9572,4591.3958,3814.6778,4257.3486,5013.0426,3834.5338,4162.7409,3884.7576,4443.0602],"pred45":[3568.9895,2175.3646,3474.0837,3803.0086,3558.557,4340.0162,4005.2924,4773.2496,3578.2661,3906.0835,3628.1813,4189.1125],"gcmai":[{"name":"Ciputra Golf Club","loc":"Surabaya","r2023":[4051,3798,3564,3645,4349,4590,4503,4623,4689,4108,4144,4759],"ytd2023":50823,"r2025":[4586,3532,3133,3476,3904,3691,3946,4228,3268,3660,3549,3784],"ytd2025":44757,"r2026":[3564,3089,2779,3510,3913,null,null,null,null,null,null,null],"ytd2026":16855},{"name":"Dago Heritage","loc":"Bandung Raya","r2023":[2804,2575,2745,2405,2650,2937,3121,3251,3500,2982,2930,3080],"ytd2023":34980,"r2025":[2995,2859,2038,2556,2954,2679,2814,3289,2757,2927,2737,2554],"ytd2025":33159,"r2026":[2250,2118,1825,2387,2327,null,null,null,null,null,null,null],"ytd2026":10907},{"name":"Damai Indah Golf BSD","loc":"Tangerang","r2023":[4310,4024,4273,4360,4187,4424,4669,4302,4401,4340,4245,4366],"ytd2023":51901,"r2025":[4515,4112,3316,3736,4591,4302,4058,4229,4508,4350,4204,4100],"ytd2025":50021,"r2026":[3696,3463,3492,3906,null,null,null,null,null,null,null,null],"ytd2026":14557},{"name":"Damai Indah Golf PIK","loc":"Jakarta Utara","r2023":[5372,5455,5923,5320,5417,5648,6203,6033,5715,5447,5896,6006],"ytd2023":68435,"r2025":[5217,5651,4670,4397,5675,5153,5633,6071,5192,4834,5553,5542],"ytd2025":63588,"r2026":[5151,5339,4752,5156,5694,null,null,null,null,null,null,null],"ytd2026":26092},{"name":"Emeralda Golf Club","loc":"Depok","r2023":[6783,6504,6955,5270,7023,6801,6839,7620,6739,6882,7109,7806],"ytd2023":82331,"r2025":[7384,7381,5692,7286,8203,7303,7165,8255,7598,7981,7322,7897],"ytd2025":89467,"r2026":[7246,6583,6104,7671,7968,null,null,null,null,null,null,null],"ytd2026":35572},{"name":"Gading Raya Golf Club","loc":"Tangerang","r2023":[6718,6031,6152,6005,6447,6440,6447,6747,6268,null,null,null],"ytd2023":57255,"r2025":[7448,6961,6651,6809,7483,6832,7125,7441,6656,6892,6952,7195],"ytd2025":84445,"r2026":[6917,6165,6029,6936,7163,null,null,null,null,null,null,null],"ytd2026":33210},{"name":"Golf Graha Famili Surabaya","loc":"Surabaya","r2023":[3549,3015,3131,2901,3820,3512,3659,3862,3838,3623,3552,3645],"ytd2023":42107,"r2025":[3683,3851,3444,3891,3682,3311,3393,3990,3851,3812,3847,3364],"ytd2025":44119,"r2026":[3759,3083,2853,3306,3347,null,null,null,null,null,null,null],"ytd2026":16348},{"name":"Gunung Geulis Golf & Country Club","loc":"Bogor","r2023":[5980,5023,4848,4260,5341,5932,5596,5979,6405,6050,5849,6451],"ytd2023":67714,"r2025":[6780,5434,3832,5935,7056,6692,6192,7244,5997,5566,5523,5812],"ytd2025":72063,"r2026":[5511,4800,3775,5978,6453,null,null,null,null,null,null,null],"ytd2026":26517},{"name":"Imperial Klub Golf","loc":"Tangerang","r2023":[5981,5690,6174,5801,6081,6146,5997,6263,6200,6006,6396,6736],"ytd2023":73471,"r2025":[5926,5907,5525,4985,6186,5982,5667,6280,5443,5613,5628,5566],"ytd2025":68708,"r2026":[5694,4852,4600,5371,5958,null,null,null,null,null,null,null],"ytd2026":26475},{"name":"Jababeka Golf & Country Club","loc":"Cikarang","r2023":[5572,5065,5304,5113,5483,5870,5923,5748,5959,5151,5179,5840],"ytd2023":66207,"r2025":[5706,5217,5119,5369,5635,5230,5475,5807,5621,5417,5817,5906],"ytd2025":66319,"r2026":[5682,5038,5070,5106,null,null,null,null,null,null,null,null],"ytd2026":20896},{"name":"Jakarta Golf Club","loc":"Jakarta Timur","r2023":[3290,2822,3020,3153,3762,3928,4246,4286,4042,4040,4165,4774],"ytd2023":45528,"r2025":[3831,3350,2773,3425,4236,3438,3526,4057,4128,4010,4081,4214],"ytd2025":45069,"r2026":[3922,2744,2873,4129,4855,null,null,null,null,null,null,null],"ytd2026":18523},{"name":"Jatinangor National Golf & Resort","loc":"Sumedang","r2023":[3268,3057,3074,2725,3255,3786,4521,3906,3719,3791,4120,4334],"ytd2023":43556,"r2025":[3275,3193,2041,3476,3931,3266,3645,4292,3283,3564,3326,3804],"ytd2025":41096,"r2026":[3536,2885,2709,3294,3910,1282,0,0,0,0,0,0],"ytd2026":17616},{"name":"Klub Golf Bogor Raya","loc":"Bogor","r2023":[5765,5595,5627,5181,6219,6036,6081,6353,6505,6750,5570,6215],"ytd2023":71897,"r2025":[6240,5940,4991,5941,6598,6158,6771,7256,6978,6954,5945,6438],"ytd2025":76210,"r2026":[5623,5008,5323,6320,null,null,null,null,null,null,null,null],"ytd2026":22274},{"name":"Lotus Lakes Golf Club","loc":"Karawang","r2023":[3585,3440,3784,3748,3820,4157,4380,3655,4520,3596,3425,4382],"ytd2023":46492,"r2025":[4479,3581,3551,3922,4464,4559,3589,4300,4297,3506,3973,4334],"ytd2025":48555,"r2026":[4028,3655,3476,3647,null,null,null,null,null,null,null,null],"ytd2026":14806},{"name":"Merapi Golf & Mountain Resort","loc":"Yogyakarta","r2023":[2225,1923,2082,1414,1987,2666,2578,2704,2224,2156,2486,3285],"ytd2023":27730,"r2025":[2865,2887,1461,2886,3087,2838,2832,3399,2756,2756,2492,2790],"ytd2025":33049,"r2026":[2838,2025,1710,2119,null,null,null,null,null,null,null,null],"ytd2026":8692},{"name":"Modern Golf & CC","loc":"Tangerang","r2023":[6821,5822,6245,5601,6235,6273,6751,7045,6512,6428,6564,7229],"ytd2023":77526,"r2025":[7221,6882,8351,8349,9933,9326,9093,9778,8712,9066,8505,8220],"ytd2025":103436,"r2026":[8700,7650,7546,8484,9207,null,null,null,null,null,null,null],"ytd2026":41587},{"name":"Mountain View","loc":"Bandung Raya","r2023":[2862,2642,2463,2154,2902,3126,3062,2915,3207,3331,3053,3064],"ytd2023":34781,"r2025":[2785,2944,1866,2615,2820,2894,2838,3603,3381,3575,3348,3556],"ytd2025":36225,"r2026":[3329,2939,2385,2817,3444,null,null,null,null,null,null,null],"ytd2026":14914},{"name":"New Kuta Golf Bali","loc":"Bali","r2023":[null,null,null,null,null,null,null,null,null,null,null,null],"ytd2023":0,"r2025":[5323,4927,3892,4918,7059,7249,7620,7763,6572,7126,5614,5156],"ytd2025":73219,"r2026":[5027,4537,4262,5018,5743,null,null,null,null,null,null,null],"ytd2026":24587},{"name":"Padang Golf Sukajadi","loc":"Batam","r2023":[2467,2305,2215,2271,2678,2848,3063,3175,3137,3133,3187,3219],"ytd2023":33698,"r2025":[2769,3267,2622,2737,3319,3389,3483,3678,3069,3729,3503,3325],"ytd2025":38890,"r2026":[3683,3003,2924,3339,null,null,null,null,null,null,null,null],"ytd2026":12949},{"name":"Palm Hill Golf","loc":"Bogor","r2023":[3181,3112,3203,3340,3285,3950,3655,3580,3970,3245,3451,3840],"ytd2023":41812,"r2025":[2907,2474,1395,1975,2643,2204,1967,2356,1984,1578,1986,1919],"ytd2025":25388,"r2026":[1438,1375,1356,1767,null,null,null,null,null,null,null,null],"ytd2026":5936},{"name":"Palm Spring Golf Batam","loc":"Batam","r2023":[null,null,null,null,null,null,null,null,null,null,null,null],"ytd2023":0,"r2025":[5307,5564,3732,3336,4341,3955,4024,4684,3967,5738,5062,4984],"ytd2025":54694,"r2026":[5965,4835,3321,3894,4462,null,null,null,null,null,null,null],"ytd2026":22477},{"name":"Palm Spring Golf Karawang","loc":"Karawang","r2023":[4533,4549,3667,3990,4454,4777,5276,5053,5408,4464,3967,4480],"ytd2023":54618,"r2025":[3692,3295,3100,3157,4019,3420,3269,3900,3227,3205,3510,3546],"ytd2025":41340,"r2026":[3467,2932,2784,3249,null,null,null,null,null,null,null,null],"ytd2026":12432},{"name":"Parahyangan Golf","loc":"Bandung Raya","r2023":[3724,3010,3372,2646,3256,3427,3498,3503,3625,3214,3647,4069],"ytd2023":40991,"r2025":[3532,4003,2386,3386,4125,3662,3982,4262,3058,3303,3477,3522],"ytd2025":42698,"r2026":[3204,2895,2409,3032,3676,null,null,null,null,null,null,null],"ytd2026":15216},{"name":"Permata Sentul Golf","loc":"Bogor","r2023":[4560,4027,4185,3209,4714,4239,4308,5066,5372,4336,4519,4549],"ytd2023":53084,"r2025":[5213,5115,2854,4315,5425,4959,5319,5721,4979,5213,4499,4599],"ytd2025":58211,"r2026":[4568,3481,2988,4694,null,null,null,null,null,null,null,null],"ytd2026":15731},{"name":"Rainbow Hills Club Golf","loc":"Bogor","r2023":[3422,2947,3323,2904,3610,4072,3779,3727,4160,3953,3725,4504],"ytd2023":44126,"r2025":[4663,4071,2798,4356,5441,4631,4153,4749,4327,3794,4096,4300],"ytd2025":51379,"r2026":[4048,3406,2998,3924,null,null,null,null,null,null,null,null],"ytd2026":14376},{"name":"Riverside Golf Club","loc":"Bogor","r2023":[3283,3283,3283,3283,3283,3283,3660,4611,4152,3791,4148,4209],"ytd2023":44269,"r2025":[4280,4199,2719,3928,4908,4231,4664,5063,4377,3918,4030,3975],"ytd2025":50292,"r2026":[3559,2809,2887,3592,4026,null,null,null,null,null,null,null],"ytd2026":16873},{"name":"Royale Krakatau Golf","loc":"","r2023":[null,null,null,null,null,null,null,null,null,null,null,null],"ytd2023":0,"r2025":[null,null,null,null,null,null,null,null,null,null,null,null],"ytd2025":0,"r2026":[2230,2057,1924,1992,2500,null,null,null,null,null,null,null],"ytd2026":10703},{"name":"Sentul Highlands Golf","loc":"Bogor","r2023":[5488,5476,5368,4803,5821,6009,5957,6872,6656,6115,6444,6638],"ytd2023":71647,"r2025":[5752,5875,4061,5348,6748,5556,5979,6814,5786,5573,5395,5935],"ytd2025":68822,"r2026":[5234,4541,4293,5546,null,null,null,null,null,null,null,null],"ytd2026":19614},{"name":"Tigaraksa Golf Residence","loc":"Tangerang","r2023":[2415,2276,2600,2401,2463,2642,2570,2497,2774,2321,2184,2911],"ytd2023":30054,"r2025":[3683,2428,2453,2659,3058,2557,2321,2588,2626,2150,2728,null],"ytd2025":29251,"r2026":[null,null,null,null,null,null,null,null,null,null,null,null],"ytd2026":0}],"compNames":{"JNGR":"Jatinangor National (JNGR)","KBP":"Parahyangan (KBP)","MV":"Mountain View","DH":"Dago Heritage"}};
+
+var ROOM={"sold":{"2023":[626,468,490,588,587,679,809,706,581,695,937,1028],"2024":[711,686,603,607,831,835,1178,1051,806,899,898,1015],"2025":[640,614,403,696,645,743,913,951,714,971,827,844],"budget2026":[1125,525,866,1132,1132,1132,1155,1155,1132,1132,1132,1155],"2026":[879,518,534,656,889,191,null,null,null,null,null,null]},"rev":{"2025":[480864122,436171236,268601346,520104824,498204137,581524513,654004194,643165790,553302962,675196249,551251945,497124073],"budget2026":[745548340,339960742,584928001,748160192,748337085,746767965,765045213,764004302,746387377,746387377,748861636,765077467],"2026":[459398829.4,333609016,358933127,427439598,534513902,117429784,null,null,null,null,null,null]},"avail":[1550,1400,1550,1500,1550,1500,1550,1550,1500,1550,1500,1550],"targetOcc":[0.72581,0.375,0.55871,0.75467,0.73032,0.75467,0.74516,0.74516,0.75467,0.73032,0.75467,0.74516],"targetSold":[1125,525,866,1132,1132,1132,1155,1155,1132,1132,1132,1155],"targetArr":[662669,647107,675586,660878,661035,659649,662337,661436,659312,661498,662365,661466],"occ2025":[0.4274,0.4462,0.2616,0.4539,0.4132,0.4799,0.5867,0.6185,0.4816,0.6308,0.5336,0.5337],"occ2026":[0.5671,0.37,0.34452,0.43733,0.7112,null,null,null,null,null,null,null],"arr2026":[546142.8658,671530.2587,705199.1877,671611.3375,601252.9831,null,null,null,null,null,null,null],"wdwe":{"2025":{"wd":[412,499,250,545,377,499,639,615,503,761,639,544],"we":[248,136,163,165,297,252,287,357,239,235,201,327],"wdPct":[0.6242,0.7858,0.6053,0.7676,0.5593,0.6644,0.6901,0.6327,0.6779,0.7641,0.7607,0.6246],"wePct":[0.3758,0.2142,0.3947,0.2324,0.4407,0.3356,0.3099,0.3673,0.3221,0.2359,0.2393,0.3754]},"2026":{"wd":[272,178,184,243,515,191,null,null,null,null,null,null],"we":[607,340,350,413,374,53,null,null,null,null,null,null],"wdPct":[0.31,0.34,0.34,0.37,null,null,null,null,null,null,null,null],"wePct":[0.69,0.66,0.66,0.63,null,null,null,null,null,null,null,null]}},"roomTypes":{"months":["JAN","FEB","MAR","APR","MAY","JUN"],"data":[{"name":"COTTAGE A","sold":[7,8,2,5,7,null],"rev":[12714380,15598017,3750744,7021488,11715371,null]},{"name":"COTTAGE B","sold":[6,5,8,1,18,null],"rev":[9272432,7959007,11406757,1580826,21359068,null]},{"name":"DELUXE DOUBLE GOLF VIEW","sold":[245,168,197,207,259,null],"rev":[129370585.47,96765087,106958667,132218256,133531628,null]},{"name":"DELUXE TWIN GOLF VIEW","sold":[236,112,112,155,212,null],"rev":[111372400.01,63740612,74030261,98337510,114189770,null]},{"name":"SUPERIOR DOUBLE MV","sold":[51,41,42,50,53,null],"rev":[29613058.14,22128765,24031549,27772048,43299500,null]},{"name":"SUPERIOR TWIN  MV","sold":[282,134,115,169,45,null],"rev":[97816304.96,71662494,64644751,90906589,35432656,null]},{"name":"JATINANGOR SUITE","sold":[24,23,35,45,17,null],"rev":[25297277.43,19860714,35437231,41898180,40865788,null]},{"name":"MANGLAYANG SUITE","sold":[20,20,14,20,64,null],"rev":[15918919.97,20587727,14197795,20684204,30874795,null]},{"name":"PRESIDENT SUITE","sold":[8,7,9,4,212,null],"rev":[28023471.41,15306593,24475372,7020497,102675984,null]}]},"segments":{"months":["JAN","FEB","MAR","APR","MAY"],"data":[{"name":"OTA","vals":[405,175,132,186,145]},{"name":"FIT","vals":[93,98,153,187,400]},{"name":"WIG","vals":[6,8,12,21,18]},{"name":"MP","vals":[20,0,0,2,0]},{"name":"GOV","vals":[17,31,0,13,17]},{"name":"CORP","vals":[144,106,135,107,147]},{"name":"GPD","vals":[8,5,1,13,2]},{"name":"GPS","vals":[46,9,10,49,6]},{"name":"MEMBER","vals":[76,32,46,38,60]},{"name":"VIP/GO.BOD","vals":[27,27,33,24,61]},{"name":"COMPLIMENT","vals":[26,21,3,6,18]},{"name":"HOUSE USE","vals":[11,6,9,10,15]}]},"golfMix":{"months":["JAN","FEB","MAR","APR","MAY"],"golfer":[286,174,224,273,null],"nonGolfer":[593,323,310,383,null]},"ota":[{"name":"Traveloka","commission":"19-20%","note":"Banyak Campaign"},{"name":"Agoda","commission":"19-25%","note":"Model Margin & Whole sale (grosir)"},{"name":"booking.com","commission":"0.19","note":"paling stabil"},{"name":"Tiket.com","commission":"15-20%","note":"Fleksibel"}],"months":["JAN","FEB","MAR","APR","MAY","JUN","JUL","AUG","SEP","OCT","NOV","DEC"]};
+
+/* ---------- palette & constants ---------- */
+var C = {
+  bg:"#0d1311", panel:"#141d1a", panel2:"#1b2723", line:"#27332e",
+  fog:"#8aa399", ink:"#eef4f0", sub:"#9fb3aa",
+  fairway:"#3da35d", KBP:"#d98a3d", MV:"#5b8dd6", DH:"#b65fb0",
+  flag:"#e4584c", gold:"#d9b44a"
+};
+var COMP_COLOR = {JNGR:C.fairway, KBP:C.KBP, MV:C.MV, DH:C.DH};
+var COMPS = ["JNGR","KBP","MV","DH"];
+var M = DATA.months;
+var YEARS = Object.keys(DATA.bandung).sort();
+var Q = [[0,1,2],[3,4,5],[6,7,8],[9,10,11]];
+var QNAMES = ["Q1","Q2","Q3","Q4"];
+
+function sum(a){ return a.reduce(function(s,x){return s+(x||0);},0); }
+function fmt(n){ return (n==null||isNaN(n))?"—":Math.round(n).toLocaleString("en-US"); }
+function pct(n){ return (n==null||isNaN(n)||!isFinite(n))?"—":(n*100).toFixed(1)+"%"; }
+function activeMonths(year){
+  var j = DATA.bandung[year].JNGR, last=-1;
+  for(var i=0;i<12;i++){ if(j[i]!=null && j[i]>0) last=i; }
+  return last;
+}
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+/* ---------- tiny DOM helper ---------- */
+function el(tag, attrs, children){
+  var e=document.createElement(tag);
+  if(attrs) for(var k in attrs){
+    if(k==="style") e.setAttribute("style",attrs[k]);
+    else if(k==="html") e.innerHTML=attrs[k];
+    else if(k.slice(0,2)==="on") e.addEventListener(k.slice(2).toLowerCase(),attrs[k]);
+    else e.setAttribute(k,attrs[k]);
+  }
+  if(children!=null){
+    (Array.isArray(children)?children:[children]).forEach(function(c){
+      if(c==null) return;
+      e.appendChild(typeof c==="string"?document.createTextNode(c):c);
+    });
+  }
+  return e;
+}
+var SVGNS="http://www.w3.org/2000/svg";
+function svgEl(tag, attrs, children){
+  var e=document.createElementNS(SVGNS,tag);
+  if(attrs) for(var k in attrs) e.setAttribute(k,attrs[k]);
+  if(children) (Array.isArray(children)?children:[children]).forEach(function(c){ if(c!=null) e.appendChild(c); });
+  return e;
+}
+
+/* ---------- shared tooltip ---------- */
+var TIP;
+function ensureTip(){
+  if(!TIP){
+    TIP=el("div",{style:"position:fixed;pointer-events:none;z-index:999;background:#0b1310f2;border:1px solid "+C.line+";border-radius:10px;padding:8px 11px;font-size:12px;color:"+C.ink+";display:none;backdrop-filter:blur(6px);box-shadow:0 6px 20px #0008"});
+    document.body.appendChild(TIP);
+  }
+  return TIP;
+}
+function showTip(html, x, y){
+  var t=ensureTip(); t.innerHTML=html; t.style.display="block";
+  var w=t.offsetWidth, h=t.offsetHeight;
+  var px=x+14, py=y+14;
+  if(px+w>window.innerWidth) px=x-w-14;
+  if(py+h>window.innerHeight) py=y-h-14;
+  t.style.left=px+"px"; t.style.top=py+"px";
+}
+function hideTip(){ if(TIP) TIP.style.display="none"; }
+function tipRow(color,name,val){
+  return '<div style="display:flex;justify-content:space-between;gap:16px;color:'+(color||C.ink)+'"><span>'+esc(name)+'</span><span style="font-weight:600">'+val+'</span></div>';
+}
+
+/* ---------- UI cards ---------- */
+function card(title, note, bodyNode, extraStyle){
+  var head = (title!=null) ? el("div",{style:"display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px"},[
+    el("h3",{style:"margin:0;font-size:14px;font-weight:600;color:"+C.ink},title),
+    note?el("span",{style:"font-size:11px;color:"+C.fog},note):null
+  ]) : null;
+  return el("div",{style:"background:"+C.panel+";border:1px solid "+C.line+";border-radius:14px;padding:16px 18px 18px;"+(extraStyle||"")},[head,bodyNode]);
+}
+function stat(label,value,opts){
+  opts=opts||{};
+  var rows=[
+    el("div",{style:"font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:"+C.fog},label),
+    el("div",{style:"font-size:28px;font-weight:700;color:"+(opts.accent||C.ink)+";margin-top:6px;font-family:'Space Grotesk',sans-serif;line-height:1"},value)
+  ];
+  if(opts.sub) rows.push(el("div",{style:"font-size:12px;color:"+C.sub+";margin-top:6px"},opts.sub));
+  if(opts.delta!=null){
+    var up=opts.delta>=0;
+    rows.push(el("div",{style:"font-size:12px;margin-top:6px;font-weight:600;color:"+(up?C.fairway:C.flag)},
+      (up?"▲ ":"▼ ")+pct(Math.abs(opts.delta))+" YoY"));
+  }
+  return el("div",{style:"background:"+C.panel+";border:1px solid "+C.line+";border-radius:14px;padding:16px 18px"},rows);
+}
+function segmented(label, value, options, onChange){
+  var wrap=el("div",{style:"display:flex;align-items:center;gap:8px"});
+  if(label) wrap.appendChild(el("span",{style:"font-size:11px;color:"+C.fog+";text-transform:uppercase;letter-spacing:.08em"},label));
+  var group=el("div",{style:"display:flex;background:"+C.panel2+";border:1px solid "+C.line+";border-radius:9px;padding:3px;gap:2px"});
+  options.forEach(function(o){
+    var v=Array.isArray(o)?o[0]:o, lbl=Array.isArray(o)?o[1]:o;
+    var active=value===v;
+    var btn=el("button",{
+      style:"border:none;cursor:pointer;padding:5px 11px;border-radius:6px;font-size:12px;font-family:inherit;transition:all .15s;font-weight:"+(active?600:400)+";background:"+(active?C.fairway:"transparent")+";color:"+(active?"#08120c":C.sub),
+      onclick:function(){ onChange(v); }
+    },lbl);
+    group.appendChild(btn);
+  });
+  wrap.appendChild(group);
+  return wrap;
+}
+
+/* ============ SVG CHART ENGINE ============ */
+var PAD={t:14,r:16,b:30,l:46};
+function niceMax(v){ if(v<=0) return 1; var p=Math.pow(10,Math.floor(Math.log10(v))); var f=v/p; var n=f<=1?1:f<=2?2:f<=5?5:10; return n*p; }
+
+function chartFrame(width,height){
+  var svg=svgEl("svg",{viewBox:"0 0 "+width+" "+height, width:"100%", height:height, style:"display:block;overflow:visible"});
+  return svg;
+}
+function gridY(svg,W,H,maxv,fmtFn,ticks){
+  ticks=ticks||4;
+  for(var i=0;i<=ticks;i++){
+    var val=maxv*i/ticks;
+    var y=PAD.t+(H-PAD.t-PAD.b)*(1-i/ticks);
+    svg.appendChild(svgEl("line",{x1:PAD.l,y1:y,x2:W-PAD.r,y2:y,stroke:C.line,"stroke-width":1}));
+    svg.appendChild(svgEl("text",{x:PAD.l-8,y:y+4,"text-anchor":"end","font-size":11,fill:C.fog},[document.createTextNode((fmtFn||fmt)(val))]));
+  }
+}
+function xLabels(svg,W,H,labels){
+  var n=labels.length, plotW=W-PAD.l-PAD.r;
+  labels.forEach(function(lb,i){
+    var x=PAD.l+ (n===1?plotW/2 : plotW*i/(n-1));
+    svg.appendChild(svgEl("text",{x:x,y:H-PAD.b+18,"text-anchor":"middle","font-size":11,fill:C.fog},[document.createTextNode(lb)]));
+  });
+}
+
+/* multi-series line chart. series=[{key,name,color,width,dot}], rows=[{x, key:val}] */
+function lineChart(rows, series, opts){
+  opts=opts||{}; var W=opts.width||640, H=opts.height||300;
+  var svg=chartFrame(W,H);
+  var plotW=W-PAD.l-PAD.r, plotH=H-PAD.t-PAD.b;
+  var allVals=[]; rows.forEach(function(r){ series.forEach(function(s){ if(r[s.key]!=null) allVals.push(r[s.key]); }); });
+  var lo = opts.percent? Math.min(0,Math.min.apply(null,allVals)) : 0;
+  var hi = opts.domainMax!=null?opts.domainMax: niceMax(Math.max.apply(null,allVals)||1);
+  if(opts.domainMin!=null) lo=opts.domainMin;
+  var fmtFn = opts.fmtY ? opts.fmtY : (opts.percent? function(v){return (v*100).toFixed(0)+"%";} : fmt);
+  // grid
+  var ticks=4;
+  for(var i=0;i<=ticks;i++){
+    var val=lo+(hi-lo)*i/ticks;
+    var y=PAD.t+plotH*(1-(val-lo)/(hi-lo));
+    svg.appendChild(svgEl("line",{x1:PAD.l,y1:y,x2:W-PAD.r,y2:y,stroke:C.line}));
+    svg.appendChild(svgEl("text",{x:PAD.l-8,y:y+4,"text-anchor":"end","font-size":11,fill:C.fog},[document.createTextNode(fmtFn(val))]));
+  }
+  if(opts.zeroLine && lo<0){
+    var yz=PAD.t+plotH*(1-(0-lo)/(hi-lo));
+    svg.appendChild(svgEl("line",{x1:PAD.l,y1:yz,x2:W-PAD.r,y2:yz,stroke:C.fog,"stroke-dasharray":"3 3"}));
+  }
+  var n=rows.length;
+  function px(i){ return PAD.l+(n===1?plotW/2:plotW*i/(n-1)); }
+  function py(v){ return PAD.t+plotH*(1-(v-lo)/(hi-lo)); }
+  // lines
+  series.forEach(function(s){
+    var d="",started=false;
+    rows.forEach(function(r,i){
+      var v=r[s.key];
+      if(v==null){ return; }
+      d+=(started?"L":"M")+px(i)+" "+py(v)+" "; started=true;
+    });
+    var attrs={d:d,fill:"none",stroke:s.color,"stroke-width":s.width||1.8,"stroke-linejoin":"round","stroke-linecap":"round"};
+    if(s.dash) attrs["stroke-dasharray"]="5 4";
+    svg.appendChild(svgEl("path",attrs));
+    if(s.dot){
+      rows.forEach(function(r,i){ if(r[s.key]!=null) svg.appendChild(svgEl("circle",{cx:px(i),cy:py(r[s.key]),r:3,fill:s.color})); });
+    }
+  });
+  // x labels
+  xLabels(svg,W,H,rows.map(function(r){return r.x;}));
+  // hover overlay
+  rows.forEach(function(r,i){
+    var hx=px(i);
+    var hit=svgEl("rect",{x:hx-(plotW/n/2),y:PAD.t,width:Math.max(plotW/n,12),height:plotH,fill:"transparent",style:"cursor:crosshair"});
+    hit.addEventListener("mousemove",function(ev){
+      var html='<div style="color:'+C.fog+';margin-bottom:5px;font-weight:600">'+esc(r.x)+'</div>';
+      series.forEach(function(s){ if(r[s.key]!=null) html+=tipRow(s.color,s.name,opts.fmtY?opts.fmtY(r[s.key]):(opts.percent?pct(r[s.key]):fmt(r[s.key]))); });
+      showTip(html,ev.clientX,ev.clientY);
+    });
+    hit.addEventListener("mouseleave",hideTip);
+    svg.appendChild(hit);
+  });
+  return svg;
+}
+
+/* grouped vertical bar chart */
+function barChart(rows, series, opts){
+  opts=opts||{}; var W=opts.width||640, H=opts.height||300;
+  var svg=chartFrame(W,H);
+  var plotW=W-PAD.l-PAD.r, plotH=H-PAD.t-PAD.b;
+  var allVals=[]; rows.forEach(function(r){ series.forEach(function(s){ if(r[s.key]!=null) allVals.push(r[s.key]); }); });
+  var hi=niceMax(Math.max.apply(null,allVals)||1);
+  gridY(svg,W,H,hi);
+  var n=rows.length, groupW=plotW/n, barGap=0.18*groupW, innerW=groupW-barGap;
+  var bw=innerW/series.length;
+  function py(v){ return PAD.t+plotH*(1-v/hi); }
+  rows.forEach(function(r,i){
+    var gx=PAD.l+groupW*i+barGap/2;
+    series.forEach(function(s,si){
+      var v=r[s.key]; if(v==null) return;
+      var h=plotH*v/hi, x=gx+bw*si, y=py(v);
+      var rect=svgEl("rect",{x:x,y:y,width:Math.max(bw-2,1),height:Math.max(h,0),fill:s.color,rx:3,style:"cursor:pointer;transition:opacity .1s"});
+      rect.addEventListener("mousemove",function(ev){
+        var html='<div style="color:'+C.fog+';margin-bottom:5px;font-weight:600">'+esc(r.x)+'</div>';
+        series.forEach(function(ss){ if(r[ss.key]!=null) html+=tipRow(ss.color,ss.name,fmt(r[ss.key])); });
+        showTip(html,ev.clientX,ev.clientY);
+      });
+      rect.addEventListener("mouseleave",hideTip);
+      svg.appendChild(rect);
+    });
+  });
+  xLabels(svg,W,H,rows.map(function(r){return r.x;}));
+  return svg;
+}
+
+/* horizontal bar (ranking). items=[{name,value,color}] */
+function hbarChart(items, opts){
+  opts=opts||{}; var W=opts.width||640;
+  var rowH=24, top=8, H=top+items.length*rowH+8;
+  var labelW=opts.labelW||190, plotL=labelW, plotR=W-24;
+  var svg=chartFrame(W,H);
+  var hi=niceMax(Math.max.apply(null,items.map(function(d){return d.value||0;}))||1);
+  items.forEach(function(d,i){
+    var y=top+i*rowH;
+    svg.appendChild(svgEl("text",{x:labelW-8,y:y+rowH/2+4,"text-anchor":"end","font-size":10.5,fill:(d.bold?C.ink:C.sub),"font-weight":(d.bold?700:400)},[document.createTextNode(d.name)]));
+    var w=(plotR-plotL)*(d.value||0)/hi;
+    var rect=svgEl("rect",{x:plotL,y:y+3,width:Math.max(w,0),height:rowH-8,fill:d.color,rx:3,style:"cursor:pointer"});
+    rect.addEventListener("mousemove",function(ev){ showTip(tipRow(d.color,d.name,fmt(d.value)),ev.clientX,ev.clientY); });
+    rect.addEventListener("mouseleave",hideTip);
+    svg.appendChild(rect);
+    svg.appendChild(svgEl("text",{x:plotL+Math.max(w,0)+6,y:y+rowH/2+4,"font-size":10.5,fill:C.fog},[document.createTextNode(fmt(d.value))]));
+  });
+  return svg;
+}
+
+/* 100% stacked area. rows=[{x, key:val}] values are absolute; normalized here */
+function stackedAreaPct(rows, series, opts){
+  opts=opts||{}; var W=opts.width||640, H=opts.height||260;
+  var svg=chartFrame(W,H);
+  var plotW=W-PAD.l-PAD.r, plotH=H-PAD.t-PAD.b;
+  var n=rows.length;
+  function px(i){ return PAD.l+(n===1?plotW/2:plotW*i/(n-1)); }
+  function py(v){ return PAD.t+plotH*(1-v); }
+  // grid 0-100%
+  for(var i=0;i<=4;i++){ var y=PAD.t+plotH*(1-i/4); svg.appendChild(svgEl("line",{x1:PAD.l,y1:y,x2:W-PAD.r,y2:y,stroke:C.line})); svg.appendChild(svgEl("text",{x:PAD.l-8,y:y+4,"text-anchor":"end","font-size":11,fill:C.fog},[document.createTextNode((i*25)+"%")])); }
+  // normalize
+  var norm=rows.map(function(r){
+    var tot=0; series.forEach(function(s){ tot+=(r[s.key]||0); });
+    var o={x:r.x,_tot:tot}; series.forEach(function(s){ o[s.key]= tot? (r[s.key]||0)/tot : 0; }); return o;
+  });
+  var cum=norm.map(function(){return 0;});
+  series.forEach(function(s){
+    var top=[],bot=[];
+    norm.forEach(function(r,i){ var b=cum[i], t=cum[i]+r[s.key]; top.push([px(i),py(t)]); bot.push([px(i),py(b)]); cum[i]=t; });
+    var d="M"+top.map(function(p){return p[0]+" "+p[1];}).join("L")+"L"+bot.slice().reverse().map(function(p){return p[0]+" "+p[1];}).join("L")+"Z";
+    svg.appendChild(svgEl("path",{d:d,fill:s.color,"fill-opacity":(s.key==="JNGR"?0.88:0.55),stroke:s.color,"stroke-width":1}));
+  });
+  // hover
+  norm.forEach(function(r,i){
+    var hx=px(i);
+    var hit=svgEl("rect",{x:hx-(plotW/n/2),y:PAD.t,width:Math.max(plotW/n,12),height:plotH,fill:"transparent",style:"cursor:crosshair"});
+    hit.addEventListener("mousemove",function(ev){
+      var html='<div style="color:'+C.fog+';margin-bottom:5px;font-weight:600">'+esc(r.x)+'</div>';
+      series.forEach(function(s){ html+=tipRow(s.color,s.name,pct(r[s.key])); });
+      showTip(html,ev.clientX,ev.clientY);
+    });
+    hit.addEventListener("mouseleave",hideTip);
+    svg.appendChild(hit);
+  });
+  xLabels(svg,W,H,rows.map(function(r){return r.x;}));
+  return svg;
+}
+
+/* donut. items=[{name,value,color}] */
+function donut(items, opts){
+  opts=opts||{}; var size=opts.size||220, r=size/2, ir=r*0.62;
+  var svg=chartFrame(size,size);
+  var g=svgEl("g",{transform:"translate("+r+","+r+")"});
+  var tot=sum(items.map(function(d){return d.value;}));
+  var a0=-Math.PI/2;
+  items.forEach(function(d){
+    var frac=tot? d.value/tot:0, a1=a0+frac*2*Math.PI;
+    var large=(a1-a0)>Math.PI?1:0;
+    var x0=Math.cos(a0)*r, y0=Math.sin(a0)*r, x1=Math.cos(a1)*r, y1=Math.sin(a1)*r;
+    var xi0=Math.cos(a0)*ir, yi0=Math.sin(a0)*ir, xi1=Math.cos(a1)*ir, yi1=Math.sin(a1)*ir;
+    var path=svgEl("path",{d:"M"+x0+" "+y0+"A"+r+" "+r+" 0 "+large+" 1 "+x1+" "+y1+"L"+xi1+" "+yi1+"A"+ir+" "+ir+" 0 "+large+" 0 "+xi0+" "+yi0+"Z",fill:d.color,style:"cursor:pointer"});
+    (function(dd){
+      path.addEventListener("mousemove",function(ev){ showTip(tipRow(dd.color,dd.name,pct(tot?dd.value/tot:0)+" · "+fmt(dd.value)),ev.clientX,ev.clientY); });
+      path.addEventListener("mouseleave",hideTip);
+    })(d);
+    g.appendChild(path); a0=a1;
+  });
+  svg.appendChild(g);
+  return svg;
+}
+function legendRow(items){
+  return el("div",{style:"display:flex;flex-wrap:wrap;gap:14px;margin-top:10px;font-size:11px;color:"+C.fog},
+    items.map(function(it){ return el("span",{style:"display:inline-flex;align-items:center;gap:6px"},[
+      el("span",{style:"width:10px;height:10px;border-radius:3px;background:"+it.color}), it.name ]); }));
+}
+
+/* horizontal bar with custom value formatter */
+function hbarChartFmt(items, opts, fmtFn){
+  opts=opts||{}; var W=opts.width||640;
+  var rowH=24, top=8, H=top+items.length*rowH+8;
+  var labelW=opts.labelW||190, plotL=labelW, plotR=W-90;
+  var svg=chartFrame(W,H);
+  var hi=niceMax(Math.max.apply(null,items.map(function(d){return d.value||0;}))||1);
+  items.forEach(function(d,i){
+    var y=top+i*rowH;
+    svg.appendChild(svgEl("text",{x:labelW-8,y:y+rowH/2+4,"text-anchor":"end","font-size":10.5,fill:(d.bold?C.ink:C.sub),"font-weight":(d.bold?700:400)},[document.createTextNode(d.name)]));
+    var w=(plotR-plotL)*(d.value||0)/hi;
+    var rect=svgEl("rect",{x:plotL,y:y+3,width:Math.max(w,0),height:rowH-8,fill:d.color,rx:3,style:"cursor:pointer"});
+    rect.addEventListener("mousemove",function(ev){ showTip(tipRow(d.color,d.name,fmtFn(d.value)),ev.clientX,ev.clientY); });
+    rect.addEventListener("mouseleave",hideTip);
+    svg.appendChild(rect);
+    svg.appendChild(svgEl("text",{x:plotL+Math.max(w,0)+6,y:y+rowH/2+4,"font-size":10.5,fill:C.fog},[document.createTextNode(fmtFn(d.value))]));
+  });
+  return svg;
+}
+
+/* ============ TAB 1: MARKET ANALYSIS ============ */
+var state1={year:"2026", gran:"monthly"};
+function renderMarket(root){
+  root.innerHTML="";
+  var year=state1.year, gran=state1.gran, b=DATA.bandung[year], lastIdx=activeMonths(year);
+  var compSeries=COMPS.map(function(c){return {key:c,name:DATA.compNames[c],color:COMP_COLOR[c],width:c==="JNGR"?3:1.8,dot:c==="JNGR"};});
+
+  /* build period rows */
+  var rows;
+  if(gran==="monthly"){
+    rows=[]; for(var i=0;i<=lastIdx;i++){ var r={x:M[i]}; COMPS.forEach(function(c){ r[c]=(b[c]&&b[c][i]!=null)?b[c][i]:null; }); rows.push(r); }
+  } else if(gran==="quarterly"){
+    rows=QNAMES.map(function(qn,qi){ var r={x:qn}; COMPS.forEach(function(c){ var vals=Q[qi].map(function(mi){return b[c]?b[c][mi]:null;}).filter(function(v){return v!=null&&v>0;}); r[c]=vals.length?sum(vals):null; }); return r; }).filter(function(r){return COMPS.some(function(c){return r[c]!=null;});});
+  } else {
+    rows=YEARS.map(function(y){ var r={x:y}; COMPS.forEach(function(c){ r[c]=DATA.bandung[y][c]?sum(DATA.bandung[y][c].filter(function(v){return v>0;})):null; }); return r; });
+  }
+
+  /* % change rows */
+  var change=rows.map(function(row,i){ var o={x:row.x}; COMPS.forEach(function(c){ var cur=row[c], prev=i>0?rows[i-1][c]:null; o[c]=(cur!=null&&prev!=null&&prev!==0)?(cur-prev)/prev:null; }); return o; });
+
+  /* KPIs YTD-comparable */
+  var span=lastIdx+1;
+  function ytd(bb,c){ return bb&&bb[c]?sum(bb[c].slice(0,span).filter(function(v){return v>0;})):0; }
+  var total=COMPS.reduce(function(s,c){return s+ytd(b,c);},0);
+  var py=String(+year-1), pb=DATA.bandung[py];
+  var totalPy=pb?COMPS.reduce(function(s,c){return s+ytd(pb,c);},0):null;
+  var kpis=COMPS.map(function(c){
+    var v=ytd(b,c), share=total?v/total:null;
+    var pv=pb?ytd(pb,c):null, pshare=(pb&&totalPy)?pv/totalPy:null;
+    return {c:c,v:v,share:share,delta:pv?(v-pv)/pv:null,shareDelta:pshare!=null?share-pshare:null};
+  });
+  var spanLabel=year==="2026"?"YTD ("+M[lastIdx]+")":"Full year";
+
+  /* controls */
+  var controls=el("div",{style:"display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-bottom:18px"},[
+    segmented("Year",year,YEARS,function(v){state1.year=v;renderMarket(root);}),
+    segmented("Breakdown",gran,[["monthly","Monthly"],["quarterly","Quarterly"],["yearly","Yearly"]],function(v){state1.gran=v;renderMarket(root);}),
+    el("div",{style:"margin-left:auto;font-size:12px;color:"+C.fog,html:"Basis: <b style='color:"+C.ink+"'>"+spanLabel+"</b> · Bandung Raya 4-course market"})
+  ]);
+  root.appendChild(controls);
+
+  /* KPI cards */
+  var kpiGrid=el("div",{style:"display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-bottom:20px"},
+    kpis.map(function(k){ return stat(DATA.compNames[k.c],fmt(k.v),{accent:COMP_COLOR[k.c],delta:k.delta,
+      sub:"Share "+pct(k.share)+(k.shareDelta!=null?"  ("+(k.shareDelta>=0?"+":"")+(k.shareDelta*100).toFixed(1)+" pt)":"")}); }));
+  root.appendChild(kpiGrid);
+
+  /* rounds chart */
+  var roundsNode = gran==="yearly"
+    ? barChart(rows,compSeries,{height:320})
+    : lineChart(rows,compSeries,{height:320});
+  root.appendChild(card("Rounds played — "+gran, year+" · "+spanLabel, el("div",{},[roundsNode,legendRow(compSeries)])));
+
+  /* two-up: % change + composition */
+  var twoUp=el("div",{style:"display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px"});
+  twoUp.appendChild(card("% change over period",
+    gran==="monthly"?"Month-over-month":gran==="quarterly"?"Quarter-over-quarter":"Year-over-year",
+    el("div",{},[lineChart(change,compSeries,{height:260,percent:true,zeroLine:true,domainMin:undefined}),legendRow(compSeries)])));
+  twoUp.appendChild(card("Share composition", gran+" · % of 4-course market",
+    el("div",{},[stackedAreaPct(rows,compSeries,{height:260}),legendRow(compSeries)])));
+  root.appendChild(twoUp);
+
+  /* table */
+  root.appendChild(card("Detail table", gran+" rounds · "+year, dataTable(rows), "margin-top:16px"));
+}
+function dataTable(rows){
+  var wrap=el("div",{style:"overflow-x:auto"});
+  var t=el("table",{style:"width:100%;border-collapse:collapse;font-size:12.5px;font-variant-numeric:tabular-nums"});
+  var thead=el("tr",{style:"color:"+C.fog+";text-align:right"},[el("th",{style:"text-align:left;padding:6px 10px;font-weight:500"},"Period")]
+    .concat(COMPS.map(function(c){return el("th",{style:"padding:6px 10px;font-weight:500;color:"+COMP_COLOR[c]},c);}))
+    .concat([el("th",{style:"padding:6px 10px;font-weight:500"},"Total")]));
+  t.appendChild(el("thead",{},thead));
+  var tb=el("tbody",{});
+  rows.forEach(function(r){
+    var tot=COMPS.reduce(function(s,c){return s+(r[c]||0);},0);
+    var tr=el("tr",{style:"border-top:1px solid "+C.line+";text-align:right"},
+      [el("td",{style:"text-align:left;padding:6px 10px;color:"+C.ink},r.x)]
+      .concat(COMPS.map(function(c){return el("td",{style:"padding:6px 10px;color:"+(c==="JNGR"?C.ink:C.sub)+";font-weight:"+(c==="JNGR"?600:400)},r[c]!=null?fmt(r[c]):"—");}))
+      .concat([el("td",{style:"padding:6px 10px;color:"+C.fog},fmt(tot))]));
+    tb.appendChild(tr);
+  });
+  t.appendChild(tb); wrap.appendChild(t); return wrap;
+}
+
+/* ============ TAB 2: OVERALL SHARE ============ */
+var state2={year:"2025"};
+function renderOverall(root){
+  root.innerHTML="";
+  var year=state2.year, lastIdx=activeMonths(year), span=lastIdx+1;
+  function ytd(yr,c){ var bb=DATA.bandung[yr]; return bb&&bb[c]?sum(bb[c].slice(0,span).filter(function(v){return v>0;})):0; }
+  var totals=COMPS.map(function(c){return {c:c,name:DATA.compNames[c],value:ytd(year,c),color:COMP_COLOR[c]};});
+  var grand=sum(totals.map(function(t){return t.value;}));
+  var ranked=totals.slice().sort(function(a,b){return b.value-a.value;});
+  var jngr=totals.find(function(d){return d.c==="JNGR";});
+  var jngrRank=ranked.findIndex(function(r){return r.c==="JNGR";})+1;
+  var leader=ranked[0];
+  var gap=leader.c==="JNGR"?(jngr.value-ranked[1].value):(jngr.value-leader.value);
+
+  var trend=YEARS.map(function(y){ var tot=COMPS.reduce(function(s,c){return s+ytd(y,c);},0); var r={x:y}; COMPS.forEach(function(c){ r[c]=tot?ytd(y,c)/tot:null; }); return r; });
+
+  root.appendChild(el("div",{style:"display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-bottom:18px"},[
+    segmented("Year",year,YEARS,function(v){state2.year=v;renderOverall(root);}),
+    el("div",{style:"margin-left:auto;font-size:12px;color:"+C.fog,html:(year==="2026"?"YTD through "+M[lastIdx]:"Full year")+" · share = course rounds ÷ 4-course total"})
+  ]));
+
+  /* donut + legend */
+  var donutLegend=el("div",{style:"display:flex;flex-direction:column;gap:7px;margin-top:6px"},
+    ranked.map(function(d){
+      return el("div",{style:"display:flex;align-items:center;gap:9px;font-size:13px"},[
+        el("span",{style:"width:10px;height:10px;border-radius:3px;flex:none;background:"+d.color}),
+        el("span",{style:"color:"+(d.c==="JNGR"?C.ink:C.sub)+";font-weight:"+(d.c==="JNGR"?700:400)},d.name),
+        el("span",{style:"margin-left:auto;color:"+C.fog},fmt(d.value)),
+        el("span",{style:"width:52px;text-align:right;color:"+(d.c==="JNGR"?C.fairway:C.sub)+";font-weight:600"},pct(grand?d.value/grand:0))
+      ]);
+    }));
+  var donutCard=card("Market share "+year, fmt(grand)+" total rounds",
+    el("div",{style:"display:flex;flex-direction:column;align-items:center"},[donut(totals,{size:200}),donutLegend]));
+
+  var callouts=el("div",{style:"display:grid;grid-template-columns:repeat(3,1fr);gap:12px"},[
+    stat("JNGR rank","#"+jngrRank,{accent:C.fairway,sub:"of 4 courses · "+year}),
+    stat("JNGR share",pct(grand?jngr.value/grand:0),{accent:C.fairway,sub:fmt(jngr.value)+" rounds"}),
+    stat(leader.c==="JNGR"?"Lead over #2":"Gap to leader",(gap>=0?"+":"")+fmt(gap),{accent:gap>=0?C.fairway:C.flag,
+      sub:(leader.c==="JNGR"?"vs "+ranked[1].name.split(" (")[0]:"vs "+leader.name.split(" (")[0])})
+  ]);
+  var compSeries=COMPS.map(function(c){return {key:c,name:DATA.compNames[c],color:COMP_COLOR[c]};});
+  var trendCard=card("Share trend — all years","YTD-comparable · stacked to 100%",
+    el("div",{},[stackedAreaPct(trend,compSeries,{height:230}),legendRow(compSeries)]));
+  var rightCol=el("div",{style:"display:flex;flex-direction:column;gap:16px"},[callouts,trendCard]);
+
+  root.appendChild(el("div",{style:"display:grid;grid-template-columns:340px 1fr;gap:16px"},[donutCard,rightCol]));
+
+  /* JNGR share bar over years with 25% line */
+  var jngrSeries=[{key:"JNGR",name:"JNGR share",color:C.fairway}];
+  var barNode=barChart(trend, jngrSeries, {height:240}); // but percent — use custom
+  // custom percent bar with reference: reuse lineChart-style; simpler: build via barChart won't show %; do manual
+  root.appendChild(card("JNGR market share over time","Our slice of the Bandung Raya market, by year", jngrShareBars(trend), "margin-top:16px"));
+}
+function jngrShareBars(trend){
+  var W=900,H=240; var svg=chartFrame(W,H);
+  var plotW=W-PAD.l-PAD.r, plotH=H-PAD.t-PAD.b, lo=0.15, hi=0.35;
+  for(var i=0;i<=4;i++){ var val=lo+(hi-lo)*i/4; var y=PAD.t+plotH*(1-(val-lo)/(hi-lo)); svg.appendChild(svgEl("line",{x1:PAD.l,y1:y,x2:W-PAD.r,y2:y,stroke:C.line})); svg.appendChild(svgEl("text",{x:PAD.l-8,y:y+4,"text-anchor":"end","font-size":11,fill:C.fog},[document.createTextNode((val*100).toFixed(0)+"%")])); }
+  // 25% gold line
+  var y25=PAD.t+plotH*(1-(0.25-lo)/(hi-lo));
+  svg.appendChild(svgEl("line",{x1:PAD.l,y1:y25,x2:W-PAD.r,y2:y25,stroke:C.gold,"stroke-dasharray":"4 4"}));
+  svg.appendChild(svgEl("text",{x:W-PAD.r,y:y25-6,"text-anchor":"end","font-size":10,fill:C.gold},[document.createTextNode("25% (equal share)")]));
+  var n=trend.length, groupW=plotW/n, bw=Math.min(groupW*0.5,34);
+  trend.forEach(function(r,i){
+    var v=r.JNGR; if(v==null) return;
+    var x=PAD.l+groupW*i+(groupW-bw)/2;
+    var yv=PAD.t+plotH*(1-(Math.max(Math.min(v,hi),lo)-lo)/(hi-lo));
+    var h=PAD.t+plotH-yv;
+    var rect=svgEl("rect",{x:x,y:yv,width:bw,height:h,rx:4,fill:v>=0.25?C.fairway:"#2f5e41",style:"cursor:pointer"});
+    rect.addEventListener("mousemove",function(ev){ showTip(tipRow(C.fairway,"JNGR "+r.x,pct(v)),ev.clientX,ev.clientY); });
+    rect.addEventListener("mouseleave",hideTip);
+    svg.appendChild(rect);
+    svg.appendChild(svgEl("text",{x:x+bw/2,y:H-PAD.b+18,"text-anchor":"middle","font-size":11,fill:C.fog},[document.createTextNode(r.x)]));
+  });
+  return svg;
+}
+
+/* ============ TAB 3: GCMAI NATIONAL ============ */
+var state3={scope:"all", sort:"y26"};
+function renderGCMAI(root){
+  root.innerHTML="";
+  var rows=DATA.gcmai;
+  // YTD-comparable span = months where a majority of courses actually reported 2026 data
+  var counts=[0,0,0,0,0,0,0,0,0,0,0,0];
+  rows.forEach(function(r){ r.r2026.forEach(function(v,i){ if(v!=null) counts[i]++; }); });
+  var threshold=Math.max(2, rows.length*0.4);
+  var span=0; for(var mi=0;mi<12;mi++){ if(counts[mi]>=threshold) span=mi+1; }
+  var enriched=rows.map(function(r){
+    var y26=sum(r.r2026.slice(0,span).filter(function(v){return v!=null;}));
+    var y25=sum(r.r2025.slice(0,span).filter(function(v){return v!=null;}));
+    return {name:r.name,loc:r.loc,r2026:r.r2026,r2025:r.r2025,y26:y26,y25:y25,
+      yoy:y25?(y26-y25)/y25:null,
+      isJNGR:r.name.toLowerCase().indexOf("jatinangor")>=0,
+      isBdg:r.loc==="Bandung Raya"};
+  });
+  var jngr=enriched.find(function(r){return r.isJNGR;});
+  var natRank=enriched.slice().sort(function(a,b){return b.y26-a.y26;}).findIndex(function(r){return r.isJNGR;})+1;
+  var natTotal=sum(enriched.map(function(r){return r.y26;}));
+
+  var scope=state3.scope, sortKey=state3.sort;
+  var filtered=scope==="bandung"?enriched.filter(function(r){return r.isBdg;}):enriched;
+  var totalY26=sum(filtered.map(function(r){return r.y26;}));
+  var withShare=filtered.slice().sort(function(a,b){return (b[sortKey]||0)-(a[sortKey]||0);});
+
+  var movers=enriched.filter(function(r){return r.yoy!=null && r.y25>1000;}).sort(function(a,b){return b.yoy-a.yoy;});
+  var gainers=movers.slice(0,5);
+  var losers=movers.slice(-5).reverse();
+
+  /* banner */
+  root.appendChild(el("div",{style:"background:"+C.panel2+";border:1px solid "+C.line+";border-radius:12px;padding:12px 16px;margin-bottom:18px;font-size:12.5px;color:"+C.sub+";line-height:1.5",
+    html:"<b style='color:"+C.gold+"'>GCMAI — Golf Course Market Analysis Index.</b> National benchmark of "+enriched.length+" courses across Indonesia. Figures are <b style='color:"+C.ink+"'>YTD-comparable</b> (first "+span+" months of each year) so 2026 partial data sits fairly beside 2025."}));
+
+  /* KPIs */
+  root.appendChild(el("div",{style:"display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-bottom:18px"},[
+    stat("JNGR national rank","#"+natRank,{accent:C.fairway,sub:"of "+enriched.length+" courses"}),
+    stat("JNGR rounds (YTD)",fmt(jngr.y26),{accent:C.fairway,delta:jngr.yoy,sub:pct(jngr.y26/natTotal)+" of national"}),
+    stat("National YTD total",fmt(natTotal),{sub:enriched.length+" courses · "+span+" mo"}),
+    stat("Bandung Raya courses",String(enriched.filter(function(r){return r.isBdg;}).length),{accent:C.gold,sub:"JNGR, KBP, MV, Dago"})
+  ]));
+
+  /* controls */
+  root.appendChild(el("div",{style:"display:flex;gap:14px;align-items:center;margin-bottom:14px;flex-wrap:wrap"},[
+    segmented("Scope",scope,[["all","All Indonesia"],["bandung","Bandung Raya only"]],function(v){state3.scope=v;renderGCMAI(root);}),
+    segmented("Sort by",sortKey,[["y26","2026 YTD"],["yoy","YoY growth"]],function(v){state3.sort=v;renderGCMAI(root);})
+  ]));
+
+  /* ranking */
+  var items=withShare.map(function(r){ return {name:r.name,value:r.y26,color:r.isJNGR?C.fairway:(r.isBdg?C.gold:"#33473f"),bold:r.isJNGR}; });
+  var rankNode=el("div",{},[hbarChart(items,{width:900,labelW:200}), legendRow([{name:"JNGR",color:C.fairway},{name:"Bandung Raya rival",color:C.gold},{name:"Other national",color:"#33473f"}])]);
+  root.appendChild(card("Course ranking — "+(scope==="bandung"?"Bandung Raya":"national"),"YTD rounds (first "+span+" months 2026)",rankNode));
+
+  /* movers */
+  root.appendChild(el("div",{style:"display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px"},[
+    card("Top 5 gainers","YoY growth, YTD-comparable",moversNode(gainers)),
+    card("Top 5 decliners","YoY growth, YTD-comparable",moversNode(losers))
+  ]));
+
+  /* JNGR monthly 2026 vs 2025 */
+  var mrows=M.map(function(m,i){ return {x:m, y2026:jngr.r2026[i], y2025:jngr.r2025[i]}; });
+  var ms=[{key:"y2025",name:"2025",color:C.fog,width:1.6},{key:"y2026",name:"2026",color:C.fairway,width:3,dot:true}];
+  root.appendChild(card("JNGR monthly rounds — 2026 vs 2025","National research context",
+    el("div",{},[lineChart(mrows,ms,{height:250}),legendRow(ms)]),"margin-top:16px"));
+}
+function moversNode(list){
+  var max=Math.max.apply(null,list.map(function(r){return Math.abs(r.yoy||0);}).concat([0.01]));
+  return el("div",{style:"display:flex;flex-direction:column;gap:10px"},
+    list.map(function(r){
+      return el("div",{style:"font-size:12.5px"},[
+        el("div",{style:"display:flex;justify-content:space-between;margin-bottom:4px"},[
+          el("span",{style:"color:"+(r.isJNGR?C.fairway:C.ink)+";font-weight:"+(r.isJNGR?700:500)},r.name+(r.isBdg?" ◦":"")),
+          el("span",{style:"color:"+(r.yoy>=0?C.fairway:C.flag)+";font-weight:600"},(r.yoy>=0?"+":"")+pct(r.yoy))
+        ]),
+        el("div",{style:"height:6px;background:"+C.panel2+";border-radius:4px;overflow:hidden"},[
+          el("div",{style:"height:100%;border-radius:4px;width:"+(Math.abs(r.yoy)/max*100)+"%;background:"+(r.yoy>=0?C.fairway:C.flag)})
+        ])
+      ]);
+    }));
+}
+
+
+/* ============ ROOM / HOTEL SECTION ============ */
+var RM = ROOM.months;
+var RCOL = { y2026:"#3da35d", y2025:"#5b8dd6", budget:"#d9b44a", y2024:"#b65fb0", y2023:"#8aa399",
+  rev:"#3da35d", occ:"#5b8dd6", wd:"#5b8dd6", we:"#d98a3d" };
+function rupiah(n){ if(n==null||isNaN(n)) return "—"; if(n>=1e9) return "Rp"+(n/1e9).toFixed(2)+"B"; if(n>=1e6) return "Rp"+(n/1e6).toFixed(0)+"M"; return "Rp"+fmt(n); }
+function lastRoomIdx(){ var s=ROOM.sold["2026"]; var last=-1; for(var i=0;i<12;i++) if(s[i]!=null&&s[i]>0) last=i; return last; }
+
+/* ----- ROOM TAB 1: Occupancy & Revenue ----- */
+var rstate1={metric:"sold"}; // sold | occ | rev | arr
+function renderRoomPerf(root){
+  root.innerHTML="";
+  var li=lastRoomIdx(), span=li+1;
+  var metric=rstate1.metric;
+
+  // KPI: YTD 2026 vs 2025 vs budget
+  function ytd(arr){ return sum((arr||[]).slice(0,span).filter(function(v){return v!=null;})); }
+  var sold26=ytd(ROOM.sold["2026"]), sold25=ytd(ROOM.sold["2025"]), soldB=ytd(ROOM.sold.budget2026);
+  var rev26=ytd(ROOM.rev["2026"]), rev25=ytd(ROOM.rev["2025"]), revB=ytd(ROOM.rev.budget2026);
+  var occ26v=avg(ROOM.occ2026,span), occ25v=avg(ROOM.occ2025,span);
+  var arr26v=avg(ROOM.arr2026,span);
+
+  root.appendChild(el("div",{style:"display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:18px"},[
+    stat("Room nights sold (YTD)",fmt(sold26),{accent:RCOL.y2026,delta:sold25?(sold26-sold25)/sold25:null,sub:"vs "+fmt(sold25)+" in 2025"}),
+    stat("Avg occupancy (YTD)",pct(occ26v),{accent:RCOL.occ,delta:occ25v?(occ26v-occ25v):null,sub:"vs "+pct(occ25v)+" in 2025"}),
+    stat("Room revenue (YTD)",rupiah(rev26),{accent:C.gold,delta:rev25?(rev26-rev25)/rev25:null,sub:"vs "+rupiah(rev25)+" in 2025"}),
+    stat("Avg room rate (ARR)",rupiah(arr26v),{accent:C.flag,sub:"YTD 2026 · per night"})
+  ]));
+  root.appendChild(el("div",{style:"font-size:12px;color:"+C.fog+";margin-bottom:14px"},"Basis: YTD through "+RM[li]+" 2026, compared on the same months. Vs budget — sold "+(soldB?pct((sold26-soldB)/soldB):"—")+", revenue "+(revB?pct((rev26-revB)/revB):"—")+"."));
+
+  root.appendChild(segmentedRow([
+    segmented("Metric",metric,[["sold","Room sold"],["occ","Occupancy %"],["rev","Revenue"],["arr","ARR"]],function(v){rstate1.metric=v;renderRoomPerf(root);})
+  ]));
+
+  // main chart
+  var rows, series, opts={height:320};
+  if(metric==="sold"){
+    rows=RM.map(function(m,i){return {x:m, y2023:ROOM.sold["2023"][i], y2024:ROOM.sold["2024"][i], y2025:ROOM.sold["2025"][i], budget:ROOM.sold.budget2026[i], y2026:ROOM.sold["2026"][i]};});
+    series=[{key:"y2023",name:"2023",color:RCOL.y2023,width:1.3},{key:"y2024",name:"2024",color:RCOL.y2024,width:1.3},
+      {key:"y2025",name:"2025",color:RCOL.y2025,width:1.8},{key:"budget",name:"Budget 2026",color:RCOL.budget,width:1.6,dash:true},
+      {key:"y2026",name:"2026",color:RCOL.y2026,width:3,dot:true}];
+    root.appendChild(card("Room nights sold — monthly","2023–2026 with budget line",el("div",{},[lineChart(rows,series,opts),legendRow(series)])));
+  } else if(metric==="occ"){
+    rows=RM.map(function(m,i){return {x:m, y2025:ROOM.occ2025[i], target:ROOM.targetOcc[i], y2026:ROOM.occ2026[i]};});
+    series=[{key:"y2025",name:"2025",color:RCOL.y2025,width:1.8},{key:"target",name:"Target",color:RCOL.budget,width:1.6,dash:true},{key:"y2026",name:"2026",color:RCOL.y2026,width:3,dot:true}];
+    root.appendChild(card("Occupancy rate — monthly","2025 vs 2026 vs target",el("div",{},[lineChart(rows,series,{height:320,percent:true}),legendRow(series)])));
+  } else if(metric==="rev"){
+    rows=RM.map(function(m,i){return {x:m, y2025:ROOM.rev["2025"][i], budget:ROOM.rev.budget2026[i], y2026:ROOM.rev["2026"][i]};});
+    series=[{key:"y2025",name:"2025",color:RCOL.y2025,width:1.8},{key:"budget",name:"Budget 2026",color:RCOL.budget,width:1.6,dash:true},{key:"y2026",name:"2026",color:RCOL.y2026,width:3,dot:true}];
+    root.appendChild(card("Room revenue — monthly","2025 vs 2026 vs budget",el("div",{},[lineChart(rows,series,{height:320,fmtY:rupiah}),legendRow(series)])));
+  } else {
+    rows=RM.map(function(m,i){return {x:m, target:ROOM.targetArr[i], y2026:ROOM.arr2026[i]};});
+    series=[{key:"target",name:"Target ARR",color:RCOL.budget,width:1.6,dash:true},{key:"y2026",name:"2026 ARR",color:RCOL.y2026,width:3,dot:true}];
+    root.appendChild(card("Average room rate (ARR) — monthly","Achieved vs target",el("div",{},[lineChart(rows,series,{height:320,fmtY:rupiah}),legendRow(series)])));
+  }
+
+  // weekday vs weekend
+  var wd=ROOM.wdwe["2026"];
+  var wrows=RM.slice(0,5).map(function(m,i){return {x:m, wd:wd.wd[i], we:wd.we[i]};});
+  var wser=[{key:"wd",name:"Weekday",color:RCOL.wd},{key:"we",name:"Weekend",color:RCOL.we}];
+  var twoUp=el("div",{style:"display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px"});
+  twoUp.appendChild(card("Weekday vs weekend — 2026","Room nights sold",el("div",{},[barChart(wrows,wser,{height:260}),legendRow(wser)])));
+
+  // occupancy 2025 vs 2026 small
+  var orows=RM.map(function(m,i){return {x:m, y2025:ROOM.occ2025[i], y2026:ROOM.occ2026[i]};});
+  var oser=[{key:"y2025",name:"2025",color:RCOL.y2025,width:1.8},{key:"y2026",name:"2026",color:RCOL.y2026,width:3,dot:true}];
+  twoUp.appendChild(card("Occupancy: 2025 vs 2026","Same-month comparison",el("div",{},[lineChart(orows,oser,{height:260,percent:true}),legendRow(oser)])));
+  root.appendChild(twoUp);
+}
+function avg(arr,span){ var v=(arr||[]).slice(0,span).filter(function(x){return x!=null;}); return v.length?sum(v)/v.length:null; }
+function segmentedRow(items){ return el("div",{style:"display:flex;flex-wrap:wrap;gap:14px;align-items:center;margin-bottom:18px"},items); }
+
+/* ----- ROOM TAB 2: Room Type ----- */
+function renderRoomTypes(root){
+  root.innerHTML="";
+  var rt=ROOM.roomTypes, mons=rt.months;
+  // active months (exclude all-null)
+  var active=[]; mons.forEach(function(m,i){ if(rt.data.some(function(t){return t.sold[i]!=null && t.sold[i]>0;})) active.push(i); });
+  var soldTotals=rt.data.map(function(t){ return {name:t.name, value:sum(active.map(function(i){return t.sold[i];}).filter(function(v){return v!=null;})), 
+    rev:sum(active.map(function(i){return t.rev[i];}).filter(function(v){return v!=null;}))}; });
+  soldTotals.sort(function(a,b){return b.value-a.value;});
+  var totalSold=sum(soldTotals.map(function(t){return t.value;}));
+  var totalRev=sum(soldTotals.map(function(t){return t.rev;}));
+  var palette=["#3da35d","#5b8dd6","#d98a3d","#b65fb0","#d9b44a","#e4584c","#4fb0a5","#9b7fd4","#7aa84f"];
+
+  root.appendChild(el("div",{style:"display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:18px"},[
+    stat("Total room nights",fmt(totalSold),{accent:RCOL.y2026,sub:active.length+" months · 9 room types"}),
+    stat("Total room revenue",rupiah(totalRev),{accent:C.gold,sub:"YTD 2026"}),
+    stat("Top type",soldTotals[0].name.replace(/GOLF VIEW/,"GV"),{accent:palette[0],sub:fmt(soldTotals[0].value)+" nights · "+pct(soldTotals[0].value/totalSold)}),
+    stat("Avg rate (top type)",rupiah(soldTotals[0].rev/soldTotals[0].value),{accent:C.flag,sub:"per night"})
+  ]));
+
+  var twoUp=el("div",{style:"display:grid;grid-template-columns:340px 1fr;gap:16px"});
+  var donutData=soldTotals.map(function(t,i){return {name:t.name, value:t.value, color:palette[i%palette.length]};});
+  var legend=el("div",{style:"display:flex;flex-direction:column;gap:6px;margin-top:8px"},
+    donutData.map(function(d){return el("div",{style:"display:flex;align-items:center;gap:8px;font-size:12px"},[
+      el("span",{style:"width:9px;height:9px;border-radius:2px;flex:none;background:"+d.color}),
+      el("span",{style:"color:"+C.sub},d.name),
+      el("span",{style:"margin-left:auto;color:"+C.fog},pct(d.value/totalSold))]);}));
+  twoUp.appendChild(card("Mix by room type","Share of nights sold",el("div",{style:"display:flex;flex-direction:column;align-items:center"},[donut(donutData,{size:190}),legend])));
+
+  var items=soldTotals.map(function(t,i){return {name:t.name.replace(/GOLF VIEW/,"GV").replace(/SUPERIOR/,"SUP"), value:t.value, color:palette[soldTotals.indexOf(t)%palette.length]};});
+  // recolor by original order
+  items=donutData.map(function(d){return {name:d.name.replace(/GOLF VIEW/,"GV").replace(/SUPERIOR/,"SUP"), value:d.value, color:d.color};});
+  twoUp.appendChild(card("Nights sold by type","YTD 2026",hbarChart(items,{width:760,labelW:210})));
+  root.appendChild(twoUp);
+
+  // revenue by type
+  var revItems=soldTotals.slice().sort(function(a,b){return b.rev-a.rev;}).map(function(t){ var d=donutData.find(function(x){return x.name===t.name;}); return {name:t.name.replace(/GOLF VIEW/,"GV").replace(/SUPERIOR/,"SUP"),value:t.rev,color:d.color}; });
+  root.appendChild(card("Revenue by room type","YTD 2026 · "+rupiah(totalRev)+" total", el("div",{},[hbarChartFmt(revItems,{width:900,labelW:210},rupiah)]),"margin-top:16px"));
+}
+
+/* ----- ROOM TAB 3: Segments ----- */
+function renderSegments(root){
+  root.innerHTML="";
+  var sm=ROOM.segments, mons=sm.months;
+  var totals=sm.data.map(function(s){return {name:s.name, value:sum(s.vals.filter(function(v){return v!=null;}))};}).filter(function(s){return s.value>0;});
+  totals.sort(function(a,b){return b.value-a.value;});
+  var grand=sum(totals.map(function(t){return t.value;}));
+  var palette=["#3da35d","#5b8dd6","#d98a3d","#b65fb0","#d9b44a","#e4584c","#4fb0a5","#9b7fd4","#7aa84f","#c77d8e","#6b8fa8","#a8a04f"];
+  var colorOf={}; totals.forEach(function(t,i){colorOf[t.name]=palette[i%palette.length];});
+
+  root.appendChild(el("div",{style:"display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:18px"},[
+    stat("Total bookings",fmt(grand),{accent:RCOL.y2026,sub:mons.length+" months · "+totals.length+" segments"}),
+    stat("Top segment",totals[0].name,{accent:colorOf[totals[0].name],sub:fmt(totals[0].value)+" · "+pct(totals[0].value/grand)}),
+    stat("OTA share",pct((totals.find(function(t){return t.name==="OTA";})||{value:0}).value/grand),{accent:C.gold,sub:"online travel agents"}),
+    stat("Direct/Corp share",pct(((totals.find(function(t){return t.name==="CORP";})||{value:0}).value+(totals.find(function(t){return t.name==="FIT";})||{value:0}).value)/grand),{accent:C.flag,sub:"FIT + corporate"})
+  ]));
+
+  var twoUp=el("div",{style:"display:grid;grid-template-columns:340px 1fr;gap:16px"});
+  var donutData=totals.map(function(t){return {name:t.name,value:t.value,color:colorOf[t.name]};});
+  var legend=el("div",{style:"display:flex;flex-direction:column;gap:5px;margin-top:8px"},
+    donutData.map(function(d){return el("div",{style:"display:flex;align-items:center;gap:8px;font-size:12px"},[
+      el("span",{style:"width:9px;height:9px;border-radius:2px;flex:none;background:"+d.color}),
+      el("span",{style:"color:"+C.sub},d.name),
+      el("span",{style:"margin-left:auto;color:"+C.fog},pct(d.value/grand))]);}));
+  twoUp.appendChild(card("Segment mix","Share of bookings · YTD",el("div",{style:"display:flex;flex-direction:column;align-items:center"},[donut(donutData,{size:190}),legend])));
+
+  // stacked monthly bars by segment (top 6 + other)
+  var top=totals.slice(0,6).map(function(t){return t.name;});
+  var srows=mons.map(function(m,mi){
+    var r={x:m};
+    top.forEach(function(nm){ var seg=sm.data.find(function(s){return s.name===nm;}); r[nm]=seg?seg.vals[mi]:0; });
+    var others=0; sm.data.forEach(function(s){ if(top.indexOf(s.name)<0) others+=(s.vals[mi]||0); }); r.Other=others;
+    return r;
+  });
+  var sser=top.map(function(nm){return {key:nm,name:nm,color:colorOf[nm]};}).concat([{key:"Other",name:"Other",color:"#33473f"}]);
+  twoUp.appendChild(card("Monthly bookings by segment","Top segments + other",el("div",{},[barChart(srows,sser,{height:280}),legendRow(sser)])));
+  root.appendChild(twoUp);
+
+  // golfer vs non-golfer
+  var gm=ROOM.golfMix;
+  var grows=gm.months.map(function(m,i){return {x:m, Golfer:gm.golfer[i], "Non-golfer":gm.nonGolfer[i]};}).filter(function(r){return r.Golfer!=null||r["Non-golfer"]!=null;});
+  var gser=[{key:"Golfer",name:"Golfer",color:C.fairway},{key:"Non-golfer",name:"Non-golfer",color:RCOL.y2025}];
+  root.appendChild(card("Golfer vs non-golfer guests","Room bookings by guest type · the golf-hotel link",el("div",{},[barChart(grows,gser,{height:260}),legendRow(gser)]),"margin-top:16px"));
+}
+
+/* ============ APP SHELL — root category router ============ */
+var SECTION=null; // null = landing; "golf" | "room"
+var GOLF_TABS=[["market","Market Analysis"],["overall","Overall Share"],["gcmai","GCMAI National"]];
+var ROOM_TABS=[["perf","Occupancy & Revenue"],["types","Room Types"],["segments","Segments & Guests"]];
+var golfTab="market", roomTab="perf";
+
+function appRoot(){
+  var rootEl=document.getElementById("root");
+  rootEl.innerHTML="";
+  var app=el("div",{id:"app",style:"background:"+C.bg+";min-height:100vh;color:"+C.ink+";font-family:'Inter','Helvetica Neue',sans-serif;padding-bottom:60px"});
+  rootEl.appendChild(app);
+  return app;
+}
+
+/* ---------- LANDING ---------- */
+function renderLanding(){
+  var app=appRoot();
+  // hero header
+  var head=el("div",{style:"padding:46px 28px 26px;text-align:center;background:linear-gradient(180deg,#16211c,"+C.bg+")"});
+  head.appendChild(el("div",{style:"display:inline-flex;align-items:center;gap:13px;margin-bottom:8px"},[
+    el("div",{style:"width:42px;height:42px;border-radius:11px;background:"+C.fairway+";display:grid;place-items:center;font-size:22px;box-shadow:0 0 0 4px "+C.fairway+"22"},"⛳"),
+    el("div",{style:"font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:26px"},"Jatinangor Market Share Room")
+  ]));
+  head.appendChild(el("div",{style:"font-size:13px;color:"+C.fog},"Sales & Marketing intelligence · Jatinangor National Golf & Resort"));
+  app.appendChild(head);
+
+  var sub=el("div",{style:"text-align:center;color:"+C.sub+";font-size:14px;margin:10px 0 30px"},"Choose a business line to explore");
+  app.appendChild(sub);
+
+  // two big cards
+  var wrap=el("div",{style:"max-width:860px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:1fr 1fr;gap:22px"});
+  wrap.appendChild(categoryCard("golf","⛳","Golf","Rounds played & competitive market share across the Bandung Raya 4-course field, plus the national GCMAI benchmark.",
+    [["4","tracked courses"],["6 yrs","2021–2026"],["#2","JNGR rank '25"]], C.fairway));
+  wrap.appendChild(categoryCard("room","🏨","Room / Hotel","Occupancy, revenue, ARR, room-type mix and market segments for the resort's lodging business.",
+    [["9","room types"],["12","market segments"],["YTD","2026 tracking"]], RCOL.budget));
+  app.appendChild(wrap);
+
+  app.appendChild(el("footer",{style:"max-width:860px;margin:40px auto 0;padding:18px 24px 0;border-top:1px solid "+C.line+";font-size:11px;color:"+C.fog+";text-align:center;line-height:1.6",
+    html:"Built from the Market Share 2025–2026 workbooks · golf rounds & room performance. <b style='color:"+C.sub+"'>Internal use — Jatinangor team.</b>"}));
+}
+function categoryCard(id,icon,title,desc,stats,accent){
+  var c=el("div",{style:"background:"+C.panel+";border:1px solid "+C.line+";border-radius:18px;padding:28px 26px;cursor:pointer;transition:transform .15s,border-color .15s,box-shadow .15s",
+    onclick:function(){ SECTION=id; renderSection(); window.scrollTo(0,0); }});
+  c.addEventListener("mouseenter",function(){ c.style.transform="translateY(-4px)"; c.style.borderColor=accent; c.style.boxShadow="0 12px 30px #0006"; });
+  c.addEventListener("mouseleave",function(){ c.style.transform=""; c.style.borderColor=C.line; c.style.boxShadow=""; });
+  c.appendChild(el("div",{style:"width:54px;height:54px;border-radius:14px;background:"+accent+"22;display:grid;place-items:center;font-size:28px;margin-bottom:16px"},icon));
+  c.appendChild(el("div",{style:"font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px;color:"+C.ink+";margin-bottom:8px"},title));
+  c.appendChild(el("div",{style:"font-size:13px;color:"+C.sub+";line-height:1.5;margin-bottom:20px"},desc));
+  var sb=el("div",{style:"display:flex;gap:18px"});
+  stats.forEach(function(s){ sb.appendChild(el("div",{},[
+    el("div",{style:"font-size:18px;font-weight:700;color:"+accent+";font-family:'Space Grotesk',sans-serif"},s[0]),
+    el("div",{style:"font-size:10.5px;color:"+C.fog+";text-transform:uppercase;letter-spacing:.06em;margin-top:2px"},s[1])
+  ])); });
+  c.appendChild(sb);
+  c.appendChild(el("div",{style:"margin-top:18px;font-size:13px;color:"+accent+";font-weight:600"},"Open "+title+" →"));
+  return c;
+}
+
+/* ---------- SECTION (golf or room) ---------- */
+function renderSection(){
+  var app=appRoot();
+  var isGolf=SECTION==="golf";
+  var accent=isGolf?C.fairway:RCOL.budget;
+  var tabs=isGolf?GOLF_TABS:ROOM_TABS;
+  var cur=isGolf?golfTab:roomTab;
+
+  var header=el("header",{style:"border-bottom:1px solid "+C.line+";padding:18px 28px 0;background:linear-gradient(180deg,#16211c,"+C.bg+")"});
+  var topRow=el("div",{style:"display:flex;align-items:center;gap:14px;flex-wrap:wrap"});
+  // home button
+  topRow.appendChild(el("button",{style:"border:1px solid "+C.line+";background:"+C.panel2+";color:"+C.sub+";cursor:pointer;border-radius:9px;padding:7px 13px;font-size:13px;font-family:inherit",
+    onclick:function(){ SECTION=null; renderLanding(); window.scrollTo(0,0); }},"← Home"));
+  topRow.appendChild(el("div",{style:"width:34px;height:34px;border-radius:9px;background:"+accent+";display:grid;place-items:center;font-size:18px;flex:none"},isGolf?"⛳":"🏨"));
+  topRow.appendChild(el("div",{},[
+    el("div",{style:"font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:19px"},isGolf?"Golf — Market Share":"Room / Hotel — Performance"),
+    el("div",{style:"font-size:12px;color:"+C.fog+";margin-top:1px"},"Jatinangor National Golf & Resort")
+  ]));
+  topRow.appendChild(el("div",{style:"margin-left:auto;font-size:11px;color:"+C.fog+";text-align:right;line-height:1.6",
+    html:isGolf?"Bandung Raya rivals: <b style='color:"+C.ink+"'>KBP · Mountain View · Dago</b><br>2026 through <b style='color:"+C.fairway+"'>Jun (JNGR) / May (rivals)</b>"
+               :"2026 actuals through <b style='color:"+accent+"'>May / early June</b><br>vs 2025 actual & 2026 budget"}));
+  header.appendChild(topRow);
+
+  var nav=el("nav",{style:"display:flex;gap:4px;margin-top:18px"});
+  tabs.forEach(function(t){
+    var active=cur===t[0];
+    nav.appendChild(el("button",{
+      style:"border:none;background:transparent;cursor:pointer;padding:10px 16px 12px;font-size:14px;font-family:inherit;transition:color .15s;border-bottom:2px solid "+(active?accent:"transparent")+";color:"+(active?C.ink:C.fog)+";font-weight:"+(active?600:400),
+      onclick:function(){ if(isGolf) golfTab=t[0]; else roomTab=t[0]; renderSection(); }
+    },t[1]));
+  });
+  header.appendChild(nav);
+  app.appendChild(header);
+
+  var main=el("main",{style:"max-width:1180px;margin:0 auto;padding:26px 28px 0"});
+  var view=el("div",{});
+  main.appendChild(view);
+  if(isGolf){
+    if(golfTab==="market") renderMarket(view);
+    else if(golfTab==="overall") renderOverall(view);
+    else renderGCMAI(view);
+  } else {
+    if(roomTab==="perf") renderRoomPerf(view);
+    else if(roomTab==="types") renderRoomTypes(view);
+    else renderSegments(view);
+  }
+
+  main.appendChild(el("footer",{style:"margin-top:40px;padding-top:18px;border-top:1px solid "+C.line+";font-size:11px;color:"+C.fog+";line-height:1.6",
+    html:isGolf
+      ? "Source: Market Share 2025–2026 (Rounds). Market share = a course's rounds ÷ total rounds of the tracked field. 2026 figures are YTD; cross-year comparisons use the same month span. <b style='color:"+C.sub+"'>Internal use — Jatinangor team.</b>"
+      : "Source: Market Share Room 2026 workbook. Revenue in IDR; ARR = revenue ÷ room nights. 2026 figures are YTD vs 2025 actual and 2026 budget. <b style='color:"+C.sub+"'>Internal use — Jatinangor team.</b>"}));
+  app.appendChild(main);
+}
+
+function mountApp(){ if(SECTION) renderSection(); else renderLanding(); }
+window.addEventListener("DOMContentLoaded",mountApp);
+
+</script>
+</body>
+</html>
