@@ -33,6 +33,37 @@ html,body{margin:0;padding:0;background:#f5f7f2}
 *{box-sizing:border-box}
 button:focus-visible{outline:2px solid #d9b44a;outline-offset:2px}
 ::-webkit-scrollbar{height:8px;width:8px}::-webkit-scrollbar-thumb{background:#27332e;border-radius:4px}
+
+/* ===== PHONE-ONLY layout refinements (<=640px). Desktop & tablet untouched. ===== */
+@media (max-width:640px){
+  html,body{overflow-x:hidden}
+  /* collapse every multi-column grid to a single column */
+  #root [style*="grid-template-columns"]{grid-template-columns:1fr !important}
+  /* tighten outer gutters of the page wrappers */
+  #root main,
+  #root [style*="max-width:1240px"],
+  #root [style*="max-width:1180px"],
+  #root [style*="max-width:1140px"],
+  #root [style*="max-width:1080px"],
+  #root [style*="max-width:860px"]{padding-left:15px !important;padding-right:15px !important}
+  #root header{padding-left:16px !important;padding-right:16px !important}
+  /* hero: shorter, less padding so the headline isn't cramped */
+  #root [style*="min-height:440px"]{min-height:330px !important}
+  #root [style*="padding:56px 54px"]{padding:32px 20px !important}
+  /* floating stat band: smaller overlap when stacked */
+  #root [style*="-46px auto 0"]{margin-top:-26px !important}
+  /* cards & panels: slightly tighter so content keeps width */
+  #root [style*="padding:16px 18px 18px"]{padding:14px 14px 16px !important}
+  #root [style*="padding:16px 18px"]{padding:14px 15px !important}
+  /* chart-heavy ranking cards can scroll sideways instead of shrinking text to nothing */
+  #root [style*="overflow-x:auto"]{-webkit-overflow-scrolling:touch}
+  /* section header right-aligned blurb reads left on a phone */
+  #root header [style*="margin-left:auto"][style*="text-align:right"]{text-align:left !important;margin-left:0 !important}
+  /* landing nav: let the tab links sit under the wordmark, full row */
+  #root [style*="18px 24px 14px"]{padding:14px 15px 8px !important}
+  /* charts fill width with correct aspect (no letterbox); icons keep fixed size */
+  #root svg[width="100%"]{height:auto !important}
+}
 </style>
 </head>
 <body>
